@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MiniGoogle 🔍</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo-wrap">
+      <span class="logo">Mini<span class="logo-g">G</span><span class="logo-o1">o</span><span class="logo-o2">o</span><span class="logo-g2">g</span><span class="logo-l">l</span><span class="logo-e">e</span></span>
+    </div>
+    <div class="search-bar-wrap">
+      <input type="text" id="searchInput" class="search-bar" placeholder="Search the mini web..." autocomplete="off" />
+      <button class="search-btn" onclick="runSearch()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/>
+        </svg>
+      </button>
+    </div>
+    <p class="subtitle">Comparing <strong>Old Ranking</strong> vs <strong>PageRank Algorithm</strong></p>
+  </header>
+
+  <!-- RESULTS SECTION -->
+  <main class="results-container" id="resultsSection" style="display:none;">
+    <div class="results-header">
+      <div class="col-head old-head">
+        <span class="badge old-badge">📜 Old Way</span>
+        <h2>Keyword & Frequency Ranking</h2>
+        <p>Ranks pages by counting keyword matches in title, URL, and description. More matches = higher rank. Simple but easily manipulated.</p>
+      </div>
+      <div class="col-head new-head">
+        <span class="badge new-badge">🚀 PageRank (Google Way)</span>
+        <h2>PageRank Algorithm</h2>
+        <p>Ranks pages by the number & quality of links pointing to them. A page is important if other important pages link to it.</p>
+      </div>
+    </div>
+
+    <div class="results-grid">
+      <div class="result-col" id="oldResults"></div>
+      <div class="divider"></div>
+      <div class="result-col" id="newResults"></div>
+    </div>
+  </main>
+
+  <!-- LANDING / INFO STATE -->
+  <section class="landing" id="landingSection">
+    <div class="algo-cards">
+      <div class="algo-card old-card">
+        <div class="algo-icon">📜</div>
+        <h3>Old Way (Pre-PageRank)</h3>
+        <ul>
+          <li>🔤 Count keyword occurrences in title &amp; URL</li>
+          <li>📄 Match words in page description</li>
+          <li>🏷️ Meta tag keyword stuffing</li>
+          <li>❌ Easily gamed by spammers</li>
+          <li>❌ No notion of page quality</li>
+        </ul>
+      </div>
+      <div class="vs-badge">VS</div>
+      <div class="algo-card new-card">
+        <div class="algo-icon">🚀</div>
+        <h3>PageRank Algorithm (Google)</h3>
+        <ul>
+          <li>🔗 Counts quality inbound links</li>
+          <li>⚖️ Important pages pass more rank</li>
+          <li>🔄 Iterative computation (damping factor 0.85)</li>
+          <li>✅ Hard to game, reflects real authority</li>
+          <li>✅ Basis of modern search ranking</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pagerank-explainer">
+      <h3>⚙️ How PageRank Works</h3>
+      <div class="formula-box">
+        <code>PR(A) = (1 - d) + d × Σ [ PR(T<sub>i</sub>) / C(T<sub>i</sub>) ]</code>
+      </div>
+      <p><strong>d</strong> = damping factor (0.85) &nbsp;|&nbsp; <strong>T<sub>i</sub></strong> = pages linking to A &nbsp;|&nbsp; <strong>C(T<sub>i</sub>)</strong> = outgoing links from T<sub>i</sub></p>
+      <div class="link-graph">
+        <h4>🔗 Simulated Link Graph (Mini Web)</h4>
+        <div class="graph-wrap" id="graphCanvas"></div>
+      </div>
+    </div>
+
+    <div class="try-hint">
+      <p>🔍 Try searching: <span class="chip" onclick="setSearch('pizza')">pizza</span> <span class="chip" onclick="setSearch('pune food')">pune food</span> <span class="chip" onclick="setSearch('cheap eats')">cheap eats</span> <span class="chip" onclick="setSearch('recipes')">recipes</span></p>
+    </div>
+  </section>
+
+  <!-- LINK GRAPH MODAL -->
+  <div class="modal-overlay" id="graphModal" style="display:none;" onclick="closeModal()">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <h3>🔗 Full Link Graph</h3>
+      <canvas id="graphModalCanvas" width="700" height="460"></canvas>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>MiniGoogle &mdash; Built to demonstrate Search Ranking Algorithms &nbsp;|&nbsp; <a href="#" onclick="showGraph()">View Link Graph 🔗</a></p>
+  </footer>
+
+  <script src="pagerank.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
