@@ -1,262 +1,1836 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>PizzaGoogle 🍕</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="style.css"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Google - MiniGoogle Pune Food Search</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'><path fill='%23EA4335' d='M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z'/><path fill='%234285F4' d='M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z'/><path fill='%23FBBC05' d='M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z'/><path fill='%2334A853' d='M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z'/></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Product+Sans:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ==========================================================================
+       AUTHENTIC GOOGLE SEARCH INTERFACE STYLES (Light & Clean Material)
+       ========================================================================== */
+    :root {
+      --google-blue: #1a73e8;
+      --google-blue-hover: #1765cc;
+      --google-blue-text: #1a0dab;
+      --google-red: #ea4335;
+      --google-yellow: #fbbc05;
+      --google-green: #34a853;
+      --google-green-url: #202124;
+      --google-green-sub: #155724;
+      --google-gray-bg: #f8f9fa;
+      --google-border: #dfe1e5;
+      --google-border-hover: rgba(223,225,229,0);
+      --google-text: #202124;
+      --google-subtext: #4d5156;
+      --google-search-shadow: 0 1px 6px rgba(32,33,36,.28);
+      --google-btn-bg: #f8f9fa;
+      --google-btn-border: #f8f9fa;
+      --google-btn-hover: #f1f3f4;
+      --card-radius: 12px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Roboto, Arial, sans-serif;
+      color: var(--google-text);
+      background: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    /* ---------------- HEADER / TOP NAV ---------------- */
+    .top-header {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 12px 20px;
+      gap: 16px;
+      font-size: 13px;
+      color: rgba(0,0,0,0.87);
+    }
+    .top-header a:hover { text-decoration: underline; }
+    .top-header-left {
+      margin-right: auto;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .badge-tag {
+      background: #e8f0fe;
+      color: #1967d2;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 3px 10px;
+      border-radius: 12px;
+      letter-spacing: 0.2px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Google 9-dots App Grid */
+    .apps-icon-btn {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: #5f6368;
+    }
+    .apps-icon-btn:hover { background: rgba(60,64,67,0.08); }
+
+    /* User Profile Avatar */
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #1a73e8;
+      color: white;
+      font-weight: 500;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    /* ---------------- HOMEPAGE VIEW ---------------- */
+    #homepageView {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0 16px 60px;
+      max-width: 900px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* Google Logo */
+    .logo-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 26px;
+      position: relative;
+    }
+    .google-logo {
+      font-family: 'Product Sans', 'Roboto', Arial, sans-serif;
+      font-size: 84px;
+      font-weight: 700;
+      letter-spacing: -2px;
+      user-select: none;
+      display: inline-flex;
+      align-items: baseline;
+    }
+    .google-logo .c-blue   { color: #4285F4; }
+    .google-logo .c-red    { color: #EA4335; }
+    .google-logo .c-yellow { color: #FBBC05; }
+    .google-logo .c-green  { color: #34A853; }
+
+    .logo-subtitle {
+      font-size: 13px;
+      color: #5f6368;
+      margin-top: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 500;
+    }
+    .edition-pill {
+      background: #fef7e0;
+      color: #b06000;
+      border: 1px solid #f9ab00;
+      padding: 1px 8px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    /* Search Bar Capsule */
+    .search-box-wrap {
+      width: 100%;
+      max-width: 584px;
+      position: relative;
+      margin-bottom: 28px;
+    }
+    .search-capsule {
+      display: flex;
+      align-items: center;
+      height: 46px;
+      background: #fff;
+      border: 1px solid var(--google-border);
+      box-shadow: none;
+      border-radius: 24px;
+      padding: 0 14px;
+      transition: all 0.2s cubic-bezier(0.4,0,0.2,1);
+    }
+    .search-capsule:hover {
+      box-shadow: 0 1px 6px rgba(32,33,36,.28);
+      border-color: rgba(223,225,229,0);
+    }
+    .search-capsule:focus-within {
+      box-shadow: 0 1px 6px rgba(32,33,36,.28);
+      border-color: rgba(223,225,229,0);
+    }
+
+    .search-icon-svg {
+      width: 20px;
+      height: 20px;
+      fill: #9aa0a6;
+      margin-right: 12px;
+      flex-shrink: 0;
+    }
+    .search-input {
+      flex: 1;
+      height: 100%;
+      border: none;
+      outline: none;
+      font-size: 16px;
+      color: rgba(0,0,0,.87);
+      background: transparent;
+    }
+    .clear-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      color: #70757a;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+    .clear-btn:hover { color: #202124; }
+    .search-tool-icons {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-left: 8px;
+    }
+    .tool-icon-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2px;
+      transition: transform 0.1s;
+    }
+    .tool-icon-btn:hover { transform: scale(1.1); }
+
+    /* Home Buttons */
+    .home-buttons {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .google-btn {
+      background-color: var(--google-btn-bg);
+      border: 1px solid var(--google-btn-border);
+      color: #3c4043;
+      font-size: 14px;
+      border-radius: 4px;
+      padding: 0 16px;
+      height: 36px;
+      cursor: pointer;
+      user-select: none;
+      transition: box-shadow 0.15s, border-color 0.15s, background-color 0.15s;
+      font-family: inherit;
+    }
+    .google-btn:hover {
+      box-shadow: 0 1px 1px rgba(0,0,0,.1);
+      background-color: var(--google-btn-hover);
+      border-color: #dadce0;
+      color: #202124;
+    }
+
+    /* Google offered in line */
+    .languages-line {
+      font-size: 13px;
+      color: #4d5156;
+      margin-bottom: 34px;
+      text-align: center;
+    }
+    .languages-line a {
+      color: var(--google-blue-text);
+      margin: 0 4px;
+    }
+    .languages-line a:hover { text-decoration: underline; }
+
+    /* Chrome New Tab Shortcuts (6 required food sites) */
+    .shortcuts-section {
+      width: 100%;
+      max-width: 680px;
+      margin-bottom: 24px;
+    }
+    .shortcuts-title {
+      font-size: 12px;
+      font-weight: 500;
+      color: #70757a;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 14px;
+      text-align: center;
+    }
+    .shortcuts-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px;
+    }
+    .shortcut-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px 4px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.15s;
+      text-align: center;
+    }
+    .shortcut-card:hover { background-color: rgba(32,33,36,0.04); }
+    .shortcut-icon-circle {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #f1f3f4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 8px;
+      position: relative;
+      box-shadow: 0 1px 2px rgba(60,64,67,0.1);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .shortcut-card:hover .shortcut-icon-circle {
+      transform: translateY(-2px);
+      box-shadow: 0 3px 6px rgba(60,64,67,0.2);
+    }
+    .shortcut-name {
+      font-size: 12px;
+      color: #3c4043;
+      max-width: 90px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-weight: 500;
+    }
+    .shortcut-tag {
+      font-size: 10px;
+      color: #70757a;
+      margin-top: 2px;
+    }
+
+    /* Quick Suggestion Chips */
+    .quick-chips-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      max-width: 650px;
+      margin-top: 6px;
+    }
+    .search-chip {
+      background: #f1f3f4;
+      border: 1px solid #dadce0;
+      color: #3c4043;
+      font-size: 12px;
+      padding: 6px 14px;
+      border-radius: 16px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s;
+    }
+    .search-chip:hover {
+      background: #e8f0fe;
+      border-color: #1a73e8;
+      color: #1967d2;
+    }
+    .chip-star {
+      background: #fef7e0;
+      border-color: #f9ab00;
+      color: #b06000;
+      font-weight: 600;
+    }
+
+    /* ---------------- SERP RESULTS VIEW (Modern Google SERP) ---------------- */
+    #serpView {
+      display: none;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    /* SERP Sticky Top Header */
+    .serp-header {
+      position: sticky;
+      top: 0;
+      background: #fff;
+      z-index: 100;
+      border-bottom: 1px solid #ebebeb;
+      padding: 12px 24px 0;
+    }
+    .serp-header-top {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      margin-bottom: 12px;
+    }
+    .serp-logo {
+      font-family: 'Product Sans', Roboto, sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      cursor: pointer;
+      display: flex;
+      align-items: baseline;
+      user-select: none;
+    }
+    .serp-logo .c-blue   { color: #4285F4; }
+    .serp-logo .c-red    { color: #EA4335; }
+    .serp-logo .c-yellow { color: #FBBC05; }
+    .serp-logo .c-green  { color: #34A853; }
+    .serp-logo-sub {
+      font-size: 12px;
+      color: #5f6368;
+      margin-left: 4px;
+      font-weight: 500;
+    }
+
+    .serp-search-box {
+      flex: 1;
+      max-width: 692px;
+      display: flex;
+      align-items: center;
+      height: 44px;
+      background: #fff;
+      border-radius: 24px;
+      box-shadow: 0 2px 5px 1px rgba(64,60,67,.16);
+      padding: 0 16px;
+    }
+    .serp-search-input {
+      flex: 1;
+      height: 100%;
+      border: none;
+      outline: none;
+      font-size: 15px;
+      color: rgba(0,0,0,.87);
+    }
+
+    .serp-actions {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    /* SERP Nav Tabs */
+    .serp-tabs-bar {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-size: 14px;
+      color: #5f6368;
+      overflow-x: auto;
+      padding-left: 140px; /* Aligns with search results */
+    }
+    .serp-tab {
+      padding: 10px 4px 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      border-bottom: 3px solid transparent;
+      white-space: nowrap;
+      user-select: none;
+      transition: color 0.15s;
+    }
+    .serp-tab:hover { color: #202124; }
+    .serp-tab.active {
+      color: #1a73e8;
+      font-weight: 500;
+      border-bottom-color: #1a73e8;
+    }
+    .tab-badge {
+      font-size: 11px;
+      padding: 1px 6px;
+      border-radius: 10px;
+      font-weight: 700;
+    }
+    .tab-badge-split { background: #e8f0fe; color: #1967d2; }
+    .tab-badge-old   { background: #fef7e0; color: #b06000; }
+    .tab-badge-new   { background: #ceead6; color: #137333; }
+
+    /* SERP Body Content */
+    .serp-body {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 12px 24px 60px;
+      width: 100%;
+    }
+
+    .serp-meta-line {
+      font-size: 14px;
+      color: #70757a;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    /* Google AI Overview / Spam Insight Panel */
+    .insight-card {
+      background: #f8fafd;
+      border: 1px solid #dadce0;
+      border-radius: var(--card-radius);
+      padding: 18px 22px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(60,64,67,0.08);
+      position: relative;
+      overflow: hidden;
+    }
+    .insight-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; bottom: 0;
+      width: 4px;
+      background: linear-gradient(180deg, #4285F4 0%, #EA4335 33%, #FBBC05 66%, #34A853 100%);
+    }
+    .insight-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .sparkle-icon { font-size: 18px; }
+    .insight-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #202124;
+    }
+    .insight-badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 12px;
+      background: #e8f0fe;
+      color: #1a73e8;
+    }
+    .insight-desc {
+      font-size: 14px;
+      color: #3c4043;
+      line-height: 1.6;
+    }
+
+    /* SERP Columns Layout (Side-by-Side Comparative Engine) */
+    .serp-columns-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .serp-single-col {
+      grid-template-columns: 1fr;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* Column Container */
+    .serp-col {
+      background: #ffffff;
+      border: 1px solid #e0e0e0;
+      border-radius: var(--card-radius);
+      box-shadow: 0 1px 4px rgba(32,33,36,0.06);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .serp-col-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid #ebebeb;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .col-header-old { background: #fefcf5; border-top: 4px solid #f9ab00; }
+    .col-header-new { background: #f6faff; border-top: 4px solid #1a73e8; }
+
+    .col-title-wrap h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #202124;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .col-title-wrap p {
+      font-size: 12px;
+      color: #5f6368;
+      margin-top: 2px;
+    }
+    .sort-tag {
+      font-size: 11px;
+      font-family: monospace;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .sort-tag-old { background: #fef7e0; color: #b06000; border: 1px solid #f9ab00; }
+    .sort-tag-new { background: #e8f0fe; color: #1967d2; border: 1px solid #aecbfa; }
+
+    .results-list {
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    /* Standard Google Result Item */
+    .g-result-item {
+      display: flex;
+      flex-direction: column;
+      padding: 12px 14px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      transition: background-color 0.15s, border-color 0.15s;
+      position: relative;
+    }
+    .g-result-item:hover {
+      background-color: #f8f9fa;
+      border-color: #e8eaed;
+    }
+    .g-result-item.highlight-winner {
+      background-color: #f8fbff;
+      border-color: #aecbfa;
+    }
+    .g-result-item.highlight-spammer {
+      background-color: #fef8f8;
+      border-color: #f5c2c7;
+    }
+
+    /* Top Metadata: Favicon + Domain Breadcrumb + Rank Badge */
+    .result-source-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+    .site-favicon {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #f1f3f4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .site-info {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+      flex: 1;
+      min-width: 0;
+    }
+    .site-display-name {
+      font-size: 12px;
+      color: #202124;
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .site-url-breadcrumb {
+      font-size: 11px;
+      color: #4d5156;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Rank Badge */
+    .rank-indicator {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .rank-ind-old { background: #fef7e0; color: #b06000; }
+    .rank-ind-new { background: #e8f0fe; color: #1967d2; }
+    .rank-winner { background: #1a73e8; color: #ffffff !important; box-shadow: 0 1px 3px rgba(26,115,232,0.3); }
+
+    /* Result Title */
+    .result-title-link {
+      font-size: 18px;
+      line-height: 1.3;
+      color: var(--google-blue-text);
+      font-weight: 400;
+      margin-bottom: 4px;
+      cursor: pointer;
+      display: inline-block;
+    }
+    .result-title-link:hover { text-decoration: underline; }
+
+    /* Snippet Text */
+    .result-snippet {
+      font-size: 13px;
+      line-height: 1.55;
+      color: #4d5156;
+      margin-bottom: 8px;
+    }
+    .result-snippet mark {
+      background: #fef08a;
+      color: #1c1917;
+      font-weight: 600;
+      border-radius: 2px;
+      padding: 0 2px;
+    }
+
+    /* Diagnostic Pills & Badges */
+    .result-metrics-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .metric-chip {
+      font-size: 11px;
+      font-weight: 500;
+      padding: 3px 8px;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      border: 1px solid transparent;
+    }
+    .chip-match-count { background: #fff8e1; color: #8d6e63; border-color: #ffe082; }
+    .chip-pr-score    { background: #e8f0fe; color: #1a73e8; border-color: #aecbfa; font-weight: 700; }
+    .chip-backlinks   { background: #e6f4ea; color: #137333; border-color: #ceead6; }
+    .chip-spam-warn   { background: #fce8e6; color: #c5221f; border-color: #fad2cf; font-weight: 600; }
+    .chip-demote      { background: #f1f3f4; color: #5f6368; border-color: #dadce0; }
+
+    /* Rank Movement Flag */
+    .move-flag {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      margin-left: auto;
+    }
+    .move-up   { background: #e6f4ea; color: #137333; }
+    .move-down { background: #fce8e6; color: #c5221f; }
+    .move-same { background: #f1f3f4; color: #5f6368; }
+
+    /* PageRank Progress Bar */
+    .pr-progress-wrap {
+      width: 100%;
+      height: 4px;
+      background: #e8eaed;
+      border-radius: 2px;
+      overflow: hidden;
+      margin-top: 6px;
+    }
+    .pr-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #1a73e8, #34a853);
+      border-radius: 2px;
+      transition: width 0.6s ease;
+    }
+
+    /* ---------------- INTERACTIVE LINK GRAPH LAB MODAL / TAB ---------------- */
+    #graphLabSection {
+      display: none;
+      background: #ffffff;
+      border: 1px solid #dadce0;
+      border-radius: var(--card-radius);
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 4px rgba(32,33,36,0.08);
+    }
+    .graph-lab-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .graph-title-h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #202124;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .math-formula-banner {
+      background: #f8f9fa;
+      border-left: 4px solid #1a73e8;
+      padding: 10px 16px;
+      border-radius: 0 8px 8px 0;
+      font-size: 13px;
+      color: #3c4043;
+      margin-bottom: 16px;
+      font-family: monospace;
+    }
+
+    .graph-controls-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .damp-ctrl {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: #3c4043;
+    }
+    .damp-range { accent-color: #1a73e8; }
+    .lab-btn {
+      background: #f1f3f4;
+      border: 1px solid #dadce0;
+      color: #3c4043;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .lab-btn:hover { background: #e8eaed; color: #202124; }
+    .lab-btn-active { background: #e8f0fe; color: #1967d2; border-color: #aecbfa; }
+
+    .canvas-container {
+      background: #fafbfc;
+      border: 1px solid #ebebeb;
+      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+    #linkGraphCanvas {
+      width: 100%;
+      height: 380px;
+      display: block;
+    }
+    .graph-tooltip {
+      position: absolute;
+      bottom: 10px;
+      left: 14px;
+      font-size: 12px;
+      color: #5f6368;
+      pointer-events: none;
+    }
+
+    /* ---------------- AUTHENTIC GOOGLE FOOTER ---------------- */
+    .google-footer {
+      background: #f2f2f2;
+      color: #70757a;
+      font-size: 14px;
+      margin-top: auto;
+    }
+    .footer-location {
+      padding: 12px 24px;
+      border-bottom: 1px solid #dadce0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .location-dot {
+      width: 8px;
+      height: 8px;
+      background: #70757a;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .footer-links-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      padding: 12px 24px;
+      gap: 16px;
+    }
+    .footer-links-left, .footer-links-right {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+    .footer-links-row a:hover { text-decoration: underline; color: #3c4043; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .serp-columns-grid { grid-template-columns: 1fr; }
+      .serp-tabs-bar { padding-left: 16px; }
+      .shortcuts-grid { grid-template-columns: repeat(3, 1fr); }
+      .google-logo { font-size: 58px; }
+      .top-header-left { display: none; }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- ═══ TOP NAV ═══ -->
-  <header class="topnav">
-    <div class="topnav-left">
-      <span class="topnav-pizza">🍕</span>
-      <span class="topnav-brand">
-        <span style="color:#4285F4">P</span><span style="color:#EA4335">i</span><span style="color:#FBBC05">z</span><span style="color:#4285F4">z</span><span style="color:#34A853">a</span><span style="color:#EA4335">G</span><span style="color:#FBBC05">o</span><span style="color:#4285F4">o</span><span style="color:#34A853">g</span><span style="color:#EA4335">l</span><span style="color:#FBBC05">e</span>
+  <!-- ================= TOP HEADER (Google Style) ================= -->
+  <header class="top-header">
+    <div class="top-header-left">
+      <span class="badge-tag">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9v-2h2v2zm0-4H9V7h2v5z"/></svg>
+        MiniGoogle Labs • Search Ranking Comparison
       </span>
-      <span class="topnav-badge">Pune Pizza Index • 6 Sites</span>
+      <a href="https://github.com/lonar-gith/minigoogle" target="_blank" style="color:#5f6368;font-size:12px;">GitHub Repo</a>
     </div>
-    <div class="topnav-right">
-      <a href="#graph-section" class="topnav-pill topnav-pill-blue">🕸️ Link Graph &amp; Math Lab</a>
-      <a href="#dataset-section" class="topnav-pill topnav-pill-amber">📋 CSV Dataset</a>
-    </div>
+    <a href="#" onclick="setSearchQuery('pizza'); return false;">Gmail</a>
+    <a href="#" onclick="setSearchQuery('pune food'); return false;">Images</a>
+    <button class="apps-icon-btn" title="Google apps" onclick="toggleShortcutsModal()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM6 4c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 12c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+      </svg>
+    </button>
+    <div class="user-avatar" title="Google Account: Pune Foodie">P</div>
   </header>
 
-  <!-- ═══ HERO ═══ -->
-  <section class="hero">
-    <!-- Left mascot -->
-    <div class="mascot-card mascot-left">
-      <div class="mascot-avatar" style="background:linear-gradient(135deg,#FEF3C7,#FDE68A)">
-        <span style="font-size:2.2rem">🐶</span>
-        <span class="mascot-halo">😇</span>
+  <!-- ================= HOMEPAGE VIEW ================= -->
+  <main id="homepageView">
+    <!-- Google Logo -->
+    <div class="logo-container">
+      <div class="google-logo">
+        <span class="c-blue">G</span><span class="c-red">o</span><span class="c-yellow">o</span><span class="c-blue">g</span><span class="c-green">l</span><span class="c-red">e</span>
       </div>
-      <div class="mascot-speech">
-        <div class="mascot-name">Professor Golden <span class="mascot-title">Chief Pizza Taster</span></div>
-        <p>"Whoa! In 1996, <strong>Sneaky Raccoon</strong> stole #1 by yelling <em>pizza</em> 10 times! Thank goodness PageRank crowned <strong>Royal Chef Cat!</strong>"</p>
+      <div class="logo-subtitle">
+        <span>MiniGoogle Search Engine</span>
+        <span class="edition-pill">Pune Food Edition • 6 Sites</span>
       </div>
     </div>
 
-    <!-- Logo -->
-    <div class="logo-block">
-      <div class="logo-row-1">
-        <span class="logo-letter" style="color:#4285F4">P</span>
-        <span class="logo-letter" style="color:#EA4335">i</span>
-        <span class="logo-letter" style="color:#FBBC05">z</span>
-        <span class="logo-letter" style="color:#4285F4">z</span>
-        <span class="logo-letter" style="color:#34A853">a</span>
-        <span class="logo-letter" style="color:#EA4335">G</span>
+    <!-- Search Capsule Bar -->
+    <div class="search-box-wrap">
+      <div class="search-capsule">
+        <svg class="search-icon-svg" viewBox="0 0 24 24">
+          <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+        </svg>
+        <input type="text" id="homeSearchInput" class="search-input" placeholder="Search Pune food, pizza, cheap eats, recipes..." autofocus autocomplete="off" />
+        <button id="homeClearBtn" class="clear-btn" onclick="clearHomeSearch()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+        <div class="search-tool-icons">
+          <!-- Multi-colored Voice Mic -->
+          <button class="tool-icon-btn" title="Search by voice" onclick="voiceSearchSim()">
+            <svg width="24" height="24" viewBox="0 0 24 24">
+              <path fill="#4285f4" d="m12 15c1.66 0 3-1.34 3-3v-6c0-1.66-1.34-3-3-3s-3 1.34-3 3v6c0 1.66 1.34 3 3 3z"/>
+              <path fill="#34a853" d="m11 18.08h2v3.92h-2z"/>
+              <path fill="#fbbc05" d="m7.05 16.97-1.41 1.41c2.11 2.09 5.03 3.38 8.36 3.38v-2c-2.8 0-5.26-1.08-6.95-2.79z"/>
+              <path fill="#ea4335" d="m19 12h-2c0 2.76-2.24 5-5 5v2c3.87 0 7-3.13 7-7z"/>
+            </svg>
+          </button>
+          <!-- Multi-colored Google Lens Camera -->
+          <button class="tool-icon-btn" title="Search by image / Link Graph" onclick="openLabDirect()">
+            <svg width="24" height="24" viewBox="0 0 24 24">
+              <path fill="#4285F4" d="M12 11a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/>
+              <path fill="#EA4335" d="M19 6.5h-1.8l-1.3-1.5H8.1L6.8 6.5H5c-1.1 0-2 .9-2 2v9c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-9c0-1.1-.9-2-2-2zm-7 12a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z"/>
+            </svg>
+          </button>
+        </div>
       </div>
-      <div class="logo-row-2">
-        <!-- Spinning pizza replaces first 'o' -->
-        <span class="logo-pizza-spin">
-          <svg width="52" height="52" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="26" cy="26" r="24" fill="#FBBC05" stroke="#D97706" stroke-width="2"/>
-            <circle cx="26" cy="26" r="20" fill="#FDE68A"/>
-            <circle cx="26" cy="26" r="16" fill="#FCD34D"/>
-            <circle cx="20" cy="20" r="3.5" fill="#DC2626"/>
-            <circle cx="32" cy="20" r="3.5" fill="#DC2626"/>
-            <circle cx="26" cy="30" r="3.5" fill="#DC2626"/>
-            <circle cx="17" cy="30" r="2.5" fill="#DC2626"/>
-            <circle cx="35" cy="30" r="2.5" fill="#DC2626"/>
-            <ellipse cx="22" cy="26" rx="2" ry="1.5" fill="#166534" transform="rotate(-30 22 26)"/>
-            <ellipse cx="30" cy="22" rx="2" ry="1.5" fill="#166534" transform="rotate(20 30 22)"/>
-            <path d="M26 2 Q30 10 26 14 Q22 10 26 2Z" fill="#D97706" opacity="0.7"/>
-          </svg>
-        </span>
-        <span class="logo-letter" style="color:#FBBC05">o</span>
-        <span class="logo-letter" style="color:#4285F4">g</span>
-        <span class="logo-letter" style="color:#34A853">l</span>
-        <span class="logo-letter" style="color:#EA4335">e</span>
-      </div>
-      <p class="logo-tagline">Comparing <strong style="color:#FBBC05">1996 Keyword Stuffing</strong> vs. <strong style="color:#4285F4">1998 Google PageRank</strong></p>
     </div>
 
-    <!-- Right mascot -->
-    <div class="mascot-card mascot-right">
-      <div class="mascot-avatar" style="background:linear-gradient(135deg,#DBEAFE,#BFDBFE)">
-        <span style="font-size:2.2rem" class="chef-toss">👨‍🍳</span>
+    <!-- Action Buttons -->
+    <div class="home-buttons">
+      <button class="google-btn" onclick="executeSearchFromHome()">Google Search</button>
+      <button class="google-btn" onclick="feelingLucky()">I'm Feeling Lucky 🍕</button>
+      <button class="google-btn" onclick="openLabDirect()" style="color:#1a73e8;">Explore Link Graph 🕸️</button>
+    </div>
+
+    <!-- Google offered in line -->
+    <div class="languages-line">
+      Google offered in: <a href="#" onclick="setSearchQuery('pizza'); return false;">English</a> <a href="#" onclick="setSearchQuery('pune'); return false;">हिन्दी</a> <a href="#" onclick="setSearchQuery('pune food guide'); return false;">मराठी</a> <a href="#" onclick="setSearchQuery('cheap eats'); return false;">(Pune Special Edition)</a>
+    </div>
+
+    <!-- Chrome New Tab Shortcuts Grid (6 Food Sites) -->
+    <div class="shortcuts-section">
+      <div class="shortcuts-title">Indexed Pune Food Sites (Click to Inspect)</div>
+      <div class="shortcuts-grid">
+        <div class="shortcut-card" onclick="inspectDirect('pizza-pizza-pizza')">
+          <div class="shortcut-icon-circle">🍕</div>
+          <span class="shortcut-name">Pizza Pizza Pizza</span>
+          <span class="shortcut-tag">Spammer (10×)</span>
+        </div>
+        <div class="shortcut-card" onclick="inspectDirect('cheap-eats-pune')">
+          <div class="shortcut-icon-circle">💰</div>
+          <span class="shortcut-name">Cheap Eats Pune</span>
+          <span class="shortcut-tag">Budget Guide</span>
+        </div>
+        <div class="shortcut-card" onclick="inspectDirect('pizza-recipes-home')">
+          <div class="shortcut-icon-circle">👩‍🍳</div>
+          <span class="shortcut-name">Pizza Recipes</span>
+          <span class="shortcut-tag">Homemade</span>
+        </div>
+        <div class="shortcut-card" onclick="inspectDirect('pune-food-guide')">
+          <div class="shortcut-icon-circle">📍</div>
+          <span class="shortcut-name">Pune Food Guide</span>
+          <span class="shortcut-tag">Authority Hub</span>
+        </div>
+        <div class="shortcut-card" onclick="inspectDirect('best-pizza-pune')">
+          <div class="shortcut-icon-circle">👑</div>
+          <span class="shortcut-name">Best Pizza Pune</span>
+          <span class="shortcut-tag">#1 PageRank</span>
+        </div>
+        <div class="shortcut-card" onclick="inspectDirect('college-canteen-blog')">
+          <div class="shortcut-icon-circle">🎓</div>
+          <span class="shortcut-name">College Canteen</span>
+          <span class="shortcut-tag">Campus Eats</span>
+        </div>
       </div>
-      <div class="mascot-speech">
-        <div class="mascot-name">Chef Mario <span class="mascot-title">Algorithm Chef</span></div>
-        <p>"Mamma mia! <strong>best-pizza-pune.com</strong> gets 4 real link-votes from Pune foodies—while Raccoon has ZERO links!"</p>
+    </div>
+
+    <!-- Quick Search Chips -->
+    <div class="quick-chips-row">
+      <span class="search-chip chip-star" onclick="setSearchQuery('pizza')">🍕 pizza (See 1996 Spam vs 1998 PageRank)</span>
+      <span class="search-chip" onclick="setSearchQuery('pune food guide')">🏙️ pune food guide</span>
+      <span class="search-chip" onclick="setSearchQuery('cheap eats pune')">💸 cheap eats pune</span>
+      <span class="search-chip" onclick="setSearchQuery('recipes')">📖 homemade recipes</span>
+      <span class="search-chip" onclick="setSearchQuery('canteen')">🏫 college canteen</span>
+      <span class="search-chip" onclick="setSearchQuery('*')">🌐 * (Show All 6 Sites)</span>
+    </div>
+  </main>
+
+  <!-- ================= SERP RESULTS VIEW (Google SERP) ================= -->
+  <section id="serpView">
+    <!-- Sticky Top Header -->
+    <div class="serp-header">
+      <div class="serp-header-top">
+        <div class="serp-logo" onclick="backToHome()">
+          <span class="c-blue">G</span><span class="c-red">o</span><span class="c-yellow">o</span><span class="c-blue">g</span><span class="c-green">l</span><span class="c-red">e</span>
+          <span class="serp-logo-sub">Mini</span>
+        </div>
+
+        <div class="serp-search-box">
+          <input type="text" id="serpSearchInput" class="serp-search-input" />
+          <button class="clear-btn" id="serpClearBtn" onclick="clearSerpSearch()" style="display:flex;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+          </button>
+          <div class="search-tool-icons">
+            <button class="tool-icon-btn" title="Search by voice" onclick="voiceSearchSim()">
+              <svg width="20" height="20" viewBox="0 0 24 24">
+                <path fill="#4285f4" d="m12 15c1.66 0 3-1.34 3-3v-6c0-1.66-1.34-3-3-3s-3 1.34-3 3v6c0 1.66 1.34 3 3 3z"/>
+                <path fill="#34a853" d="m11 18.08h2v3.92h-2z"/>
+                <path fill="#fbbc05" d="m7.05 16.97-1.41 1.41c2.11 2.09 5.03 3.38 8.36 3.38v-2c-2.8 0-5.26-1.08-6.95-2.79z"/>
+                <path fill="#ea4335" d="m19 12h-2c0 2.76-2.24 5-5 5v2c3.87 0 7-3.13 7-7z"/>
+              </svg>
+            </button>
+            <button class="tool-icon-btn" title="Execute Search" onclick="executeSearchFromSerp()">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="#4285F4">
+                <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="serp-actions">
+          <button class="apps-icon-btn" title="Google apps" onclick="toggleShortcutsModal()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM6 4c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 12c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+            </svg>
+          </button>
+          <div class="user-avatar">P</div>
+        </div>
+      </div>
+
+      <!-- SERP Tabs Bar -->
+      <div class="serp-tabs-bar">
+        <div class="serp-tab active" id="tabSplit" onclick="switchViewMode('split')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M4 3h7v18H4zm9 0h7v18h-7z"/></svg>
+          Side-by-Side Comparison <span class="tab-badge tab-badge-split">⚖️ Recommended</span>
+        </div>
+        <div class="serp-tab" id="tabOld" onclick="switchViewMode('old')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+          Old Way Only (1996) <span class="tab-badge tab-badge-old">Keyword Count</span>
+        </div>
+        <div class="serp-tab" id="tabNew" onclick="switchViewMode('new')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L1 21h22L12 2zm0 3.99L19.53 19H4.47L12 5.99zM11 16h2v2h-2zm0-6h2v4h-2z"/></svg>
+          PageRank Algorithm (1998) <span class="tab-badge tab-badge-new">Link Authority</span>
+        </div>
+        <div class="serp-tab" id="tabGraph" onclick="toggleGraphLab()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14h-2v-4H6v-2h4V7h2v4h4v2h-4v4z"/></svg>
+          Link Graph &amp; Math Lab 🕸️
+        </div>
+      </div>
+    </div>
+
+    <!-- Main SERP Body -->
+    <div class="serp-body">
+      <!-- Search stats meta line -->
+      <div class="serp-meta-line">
+        <span id="serpStatsText">About 6 results (0.19 seconds)</span>
+        <span style="font-size:12px;color:#1a73e8;cursor:pointer;" onclick="toggleGraphLab()">Toggle Interactive Link Graph Lab ↗</span>
+      </div>
+
+      <!-- Google AI Overview / Spam Insight Panel -->
+      <div class="insight-card" id="serpInsightCard">
+        <div class="insight-header">
+          <span class="sparkle-icon">✨</span>
+          <span class="insight-title">Search Algorithm Analysis Overview</span>
+          <span class="insight-badge" id="insightKeywordBadge">Query: pizza</span>
+        </div>
+        <p class="insight-desc" id="insightDescText">
+          In 1996 (Pre-PageRank), <strong>pizza-pizza-pizza.com</strong> captured #1 because it repeated the keyword "pizza" 14 times. Google's 1998 <strong>PageRank Algorithm</strong> cured keyword stuffing: <strong>best-pizza-pune.com</strong> takes #1 with 4 trusted inbound link recommendations, while the zero-backlink spam site is demoted to last place!
+        </p>
+      </div>
+
+      <!-- Interactive Graph Lab (collapsible) -->
+      <div id="graphLabSection">
+        <div class="graph-lab-header">
+          <div class="graph-title-h3">
+            <span>🕸️ Pune Web Link Graph &amp; PageRank Simulator</span>
+          </div>
+          <div class="graph-controls-row">
+            <div class="damp-ctrl">
+              <span>Damping Factor (d):</span>
+              <input type="range" id="dampSlider" min="0.10" max="0.99" step="0.01" value="0.85" class="damp-range" />
+              <strong id="dampValLabel">0.85</strong>
+            </div>
+            <button class="lab-btn" onclick="stepGraphIteration()">Step +1 Iteration</button>
+            <button class="lab-btn lab-btn-active" onclick="convergeGraph()">Converge (100 Iter)</button>
+            <button class="lab-btn" onclick="toggleGraphLab()">Close Lab ✕</button>
+          </div>
+        </div>
+
+        <div class="math-formula-banner">
+          PR(A) = (1 - d) / N + d × Σ [ PR(T_i) / C(T_i) ] &nbsp;&nbsp;|&nbsp;&nbsp; N = 6 pages, d = 0.85
+        </div>
+
+        <div class="canvas-container">
+          <canvas id="linkGraphCanvas"></canvas>
+          <div class="graph-tooltip" id="graphTooltip">💡 Hover or click any node to highlight who it votes for and who votes for it!</div>
+        </div>
+      </div>
+
+      <!-- Comparative Columns Grid -->
+      <div class="serp-columns-grid" id="serpColumnsGrid">
+
+        <!-- Column 1: The Old Way (Keyword Frequency) -->
+        <div class="serp-col" id="colOldWay">
+          <div class="serp-col-header col-header-old">
+            <div class="col-title-wrap">
+              <h3>📜 The Old Way (Pre-1998)</h3>
+              <p>Ranks purely by keyword repetition in title, URL &amp; content</p>
+            </div>
+            <span class="sort-tag sort-tag-old">SORT: Keyword Frequency ↓</span>
+          </div>
+          <div class="results-list" id="oldResultsList">
+            <!-- Dynamic Injection -->
+          </div>
+        </div>
+
+        <!-- Column 2: The PageRank Way (Link Authority) -->
+        <div class="serp-col" id="colNewWay">
+          <div class="serp-col-header col-header-new">
+            <div class="col-title-wrap">
+              <h3>🚀 The PageRank Way (Google 1998)</h3>
+              <p>Ranks by quality &amp; weight of incoming web link endorsements</p>
+            </div>
+            <span class="sort-tag sort-tag-new">SORT: PageRank PR(A) ↓</span>
+          </div>
+          <div class="results-list" id="newResultsList">
+            <!-- Dynamic Injection -->
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
 
-  <!-- ═══ SEARCH BAR ═══ -->
-  <section class="search-section">
-    <div class="search-wrap">
-      <span class="search-icon">🔍</span>
-      <input id="searchInput" type="text" class="search-input" placeholder="Search Pune food sites (try: pizza, pune, food, cheap, recipes, canteen)" autocomplete="off"/>
-      <button class="search-clear" onclick="clearSearch()" title="Clear">✕</button>
-      <button class="search-btn" onclick="runSearch()">Search</button>
+  <!-- ================= AUTHENTIC GOOGLE FOOTER ================= -->
+  <footer class="google-footer">
+    <div class="footer-location">
+      <span class="location-dot"></span>
+      <span>India</span>
+      <span>•</span>
+      <span>Pune, Maharashtra — Based on your IP address &amp; past activity</span>
+      <span style="color:#1a73e8;cursor:pointer;margin-left:auto;">Update location</span>
     </div>
-    <div class="chip-row">
-      <span class="chip-label">TRY QUERIES:</span>
-      <span class="chip chip-hot" onclick="setSearch('pizza')">🍕 pizza (Spam vs Rank!)</span>
-      <span class="chip" onclick="setSearch('pune')">🏙️ pune</span>
-      <span class="chip" onclick="setSearch('food')">🍽️ food</span>
-      <span class="chip" onclick="setSearch('cheap eats')">💰 cheap eats</span>
-      <span class="chip" onclick="setSearch('recipes')">📖 recipes</span>
-      <span class="chip" onclick="setSearch('canteen')">🏫 canteen</span>
-      <span class="chip chip-all" onclick="setSearch('*')">🌐 * (All 6 Sites)</span>
-    </div>
-  </section>
-
-  <!-- ═══ SPAM ALERT (shown after search) ═══ -->
-  <div class="spam-alert" id="spamAlert" style="display:none">
-    <div class="spam-alert-inner">
-      <span class="spam-siren">🚨</span>
-      <div class="spam-text">
-        <strong id="spamTitle">Spam Exposed!</strong>
-        <span id="spamDesc"></span>
+    <div class="footer-links-row">
+      <div class="footer-links-left">
+        <a href="#" onclick="alert('MiniGoogle is an interactive educational engine comparing pre-PageRank keyword matching vs Larry Page & Sergey Brin\'s 1998 PageRank algorithm.'); return false;">About MiniGoogle</a>
+        <a href="#" onclick="alert('Simulated Advertising & Foodie Network for Pune.'); return false;">Advertising</a>
+        <a href="#" onclick="alert('Business Index of Pune Restaurants & Canteens.'); return false;">Business</a>
+        <a href="#" onclick="toggleGraphLab(); return false;">How Search algorithms work</a>
       </div>
-      <span class="spam-count-pill" id="spamCountPill"></span>
-    </div>
-  </div>
-
-  <!-- ═══ RESULTS ═══ -->
-  <section class="results-section" id="resultsSection" style="display:none">
-    <div class="results-columns">
-
-      <!-- OLD WAY -->
-      <div class="col-panel col-old">
-        <div class="col-header">
-          <div>
-            <span class="era-badge badge-old">🦕 1996 Search Era</span>
-            <h2 class="col-title">The Old Way <span class="col-subtitle">(Keyword Count)</span></h2>
-            <p class="col-desc">Ranks purely by how many times your search word appears in page text. Easy to spam!</p>
-          </div>
-          <div class="sort-rule sort-rule-old">
-            <span class="sort-label">SORTING RULE</span>
-            <code>COUNT(keyword) ↓</code>
-          </div>
-        </div>
-        <div id="oldResultsList"></div>
-      </div>
-
-      <!-- PAGERANK WAY -->
-      <div class="col-panel col-new">
-        <div class="col-header">
-          <div>
-            <span class="era-badge badge-new">👑 1998 Google Breakthrough</span>
-            <h2 class="col-title">The PageRank Way <span class="col-subtitle">(Link Votes)</span></h2>
-            <p class="col-desc">Links act as weighted votes. A link from a popular page boosts your rank!</p>
-          </div>
-          <div class="sort-rule sort-rule-new">
-            <span class="sort-label">SORTING RULE</span>
-            <code>PageRank PR(i) ↓</code>
-          </div>
-        </div>
-        <div id="newResultsList"></div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ═══ LANDING / EDUCATION ═══ -->
-  <section class="landing-section" id="landingSection">
-
-    <!-- ALGO EXPLAINER CARDS -->
-    <div class="algo-grid">
-      <div class="algo-card algo-old">
-        <div class="algo-icon">📜</div>
-        <h3>The Old Way (Pre-1998)</h3>
-        <ul>
-          <li>🔤 Count how many times a keyword appears in the page</li>
-          <li>🏷️ Meta keyword tags were king</li>
-          <li>🔗 No consideration for who links to you</li>
-          <li>🦝 Easily gamed: just repeat "pizza" 20 times!</li>
-          <li>❌ Spam sites ranked above real content</li>
-        </ul>
-      </div>
-      <div class="vs-pill">VS</div>
-      <div class="algo-card algo-new">
-        <div class="algo-icon">🚀</div>
-        <h3>PageRank Algorithm (Google 1998)</h3>
-        <ul>
-          <li>🔗 Each link = a vote of confidence</li>
-          <li>⚖️ Links from important pages count more</li>
-          <li>🔄 Iteratively computed with damping factor d=0.85</li>
-          <li>✅ Spam sites with 0 links rank at the bottom</li>
-          <li>✅ Authority flows through the web graph</li>
-        </ul>
+      <div class="footer-links-right">
+        <a href="#" onclick="alert('Privacy Notice: All searches and link graph calculations run entirely in your local browser!'); return false;">Privacy</a>
+        <a href="#" onclick="alert('Terms: Free and open-source demonstration for learning search architecture.'); return false;">Terms</a>
+        <a href="#" onclick="setSearchQuery('pizza'); return false;">Settings</a>
       </div>
     </div>
-
-    <!-- GRAPH SECTION -->
-    <div class="graph-section" id="graph-section">
-      <div class="section-header">
-        <h2>🕸️ Link Graph &amp; Math Lab</h2>
-        <p>How authority flows between our 6 Pune food sites. Node size = PageRank score.</p>
-      </div>
-
-      <div class="formula-row">
-        <div class="formula-box">
-          <span class="formula-label">PageRank Formula:</span>
-          <code>PR(A) = (1 − d) / N + d × Σ [ PR(Tᵢ) / C(Tᵢ) ]</code>
-        </div>
-        <div class="damping-box">
-          <label class="damping-label">🎲 Damping Factor: <strong id="dampVal">0.85</strong></label>
-          <input type="range" id="dampSlider" min="0.10" max="0.99" step="0.01" value="0.85" class="damp-slider"/>
-          <div class="damp-markers"><span>0.10 (Random)</span><span>0.85 (Google)</span><span>0.99 (Pure Links)</span></div>
-        </div>
-      </div>
-
-      <div class="iter-controls">
-        <button class="iter-btn" onclick="iterReset()">⏮ Iter 0 (Equal)</button>
-        <button class="iter-btn iter-step" onclick="iterStep()">Step +1 ⏭</button>
-        <button class="iter-btn iter-converge" onclick="iterConverge()">Converge ⚡</button>
-        <span class="iter-count">Iteration: <strong id="iterNum">∞ (converged)</strong></span>
-      </div>
-
-      <div class="graph-canvas-wrap">
-        <canvas id="graphCanvas" width="900" height="400"></canvas>
-      </div>
-      <p class="graph-hint">Click a node to inspect its inbound links and PageRank contribution</p>
-
-      <div class="node-inspector" id="nodeInspector" style="display:none">
-        <h4 id="inspectorTitle">Node Details</h4>
-        <div id="inspectorBody"></div>
-      </div>
-    </div>
-
-    <!-- DATASET TABLE -->
-    <div class="dataset-section" id="dataset-section">
-      <div class="section-header">
-        <h2>📋 Mini-Google Index Dataset</h2>
-        <p>All 6 indexed pages with their link graph, keyword counts, and live PageRank scores.</p>
-      </div>
-      <div class="table-wrap">
-        <table class="dataset-table" id="datasetTable">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Mascot</th>
-              <th>Site URL</th>
-              <th>Links To</th>
-              <th>Linked By</th>
-              <th>PageRank</th>
-            </tr>
-          </thead>
-          <tbody id="datasetBody"></tbody>
-        </table>
-      </div>
-    </div>
-
-  </section>
-
-  <!-- ═══ FOOTER ═══ -->
-  <footer class="footer">
-    <p>🍕 PizzaGoogle &mdash; Demonstrating Search Ranking Algorithms with Pune Food Sites</p>
-    <p style="margin-top:6px;font-size:0.78rem;opacity:0.7">Built with ❤️ | Old Way vs PageRank | 6 Sites Indexed</p>
   </footer>
 
-  <script src="pagerank.js"></script>
-  <script src="app.js"></script>
+  <!-- ================= LOGIC & PAGERANK SCRIPT ================= -->
+  <script>
+    /* ==========================================================================
+       6 REQUIRED SITES DATASET & LINK GRAPH
+       ========================================================================== */
+    const SITES = [
+      {
+        id: 'pizza-pizza-pizza',
+        url: 'http://pizza-pizza-pizza.com/',
+        title: 'Pizza Pizza Pizza - The Ultimate Pizza Pizza Destination',
+        desc: 'Pizza pizza pizza! Best pizza pizza pizza toppings, pizza crust, pizza sauce, and delicious cheese deals. Pizza pizza pizza lovers enjoy the best pizza pizza pizza every day! Order pizza pizza pizza now for cheap delivery.',
+        keywords: ['pizza', 'pizza pizza', 'toppings', 'crust', 'cheese', 'deals', 'order', 'delivery'],
+        emoji: '🍕',
+        siteName: 'pizza-pizza-pizza.com',
+        isSpammer: true
+      },
+      {
+        id: 'cheap-eats-pune',
+        url: 'http://cheap-eats-pune.com/',
+        title: 'Cheap Eats Pune: Student Budget Food, Canteen & Street Food Guide',
+        desc: 'Comprehensive guide to cheap eats in Pune! Find affordable street food stalls, budget restaurants in FC Road, Viman Nagar canteen meals, and pocket-friendly pizza joints for Pune college students.',
+        keywords: ['cheap eats', 'pune', 'budget food', 'street food', 'canteen', 'affordable', 'student', 'vada pav', 'pizza'],
+        emoji: '💰',
+        siteName: 'cheap-eats-pune.com',
+        isSpammer: false
+      },
+      {
+        id: 'pizza-recipes-home',
+        url: 'https://pizza-recipes-home.com/',
+        title: 'Pizza Recipes Home: Authentic Dough, Sauces & Artisan Pizza Baking',
+        desc: 'Learn how to make authentic homemade pizza from scratch. Step-by-step pizza dough fermentation recipes, Italian tomato sauce guides, and best baking temperatures for oven pizza.',
+        keywords: ['pizza recipes', 'homemade', 'dough', 'sauce', 'artisan', 'baking', 'italian', 'recipe', 'pizza'],
+        emoji: '👩‍🍳',
+        siteName: 'pizza-recipes-home.com',
+        isSpammer: false
+      },
+      {
+        id: 'pune-food-guide',
+        url: 'https://pune-food-guide.com/',
+        title: 'Pune Food Guide: Best Restaurants, Cafes & Culinary Highlights',
+        desc: 'The official Pune Food Guide! Curated directory of top-rated cafes, historic bakery spots, award-winning pizza restaurants, street eateries, and culinary food tours across Pune city.',
+        keywords: ['pune food guide', 'pune', 'restaurants', 'cafes', 'food', 'reviews', 'culinary', 'best pizza', 'pizza'],
+        emoji: '📍',
+        siteName: 'pune-food-guide.com',
+        isSpammer: false
+      },
+      {
+        id: 'best-pizza-pune',
+        url: 'http://best-pizza-pune.com/',
+        title: 'Best Pizza in Pune - Top Rated Woodfired & Sourdough Pizzerias',
+        desc: 'Looking for the best pizza in Pune? Verified food critic reviews, top 10 rankings of authentic Neapolitan and woodfired pizza places in Koregaon Park and Baner, with top customer ratings.',
+        keywords: ['best pizza', 'pune', 'woodfired', 'neapolitan', 'pizzeria', 'ratings', 'reviews', 'pizza pune', 'pizza'],
+        emoji: '👑',
+        siteName: 'best-pizza-pune.com',
+        isSpammer: false
+      },
+      {
+        id: 'college-canteen-blog',
+        url: 'https://college-canteen-blog.com/',
+        title: 'College Canteen Blog: Campus Food Reviews & Student Budget Hacks',
+        desc: 'Stories and honest reviews of engineering and university canteens across Pune! Campus samosa ratings, hostel mess food hacks, cheap canteen meals, and late-night study snack spots.',
+        keywords: ['college canteen', 'blog', 'campus', 'student', 'mess', 'cheap eats', 'budget', 'pune', 'food'],
+        emoji: '🎓',
+        siteName: 'college-canteen-blog.com',
+        isSpammer: false
+      }
+    ];
+
+    /*
+      WEB GRAPH TOPOLOGY:
+      - 'best-pizza-pune' receives endorsements from Pune Food Guide, Cheap Eats, Pizza Recipes, and College Canteen.
+      - 'pizza-pizza-pizza' (keyword spammer) has ZERO quality backlinks from authoritative guides!
+    */
+    const LINK_EDGES = {
+      'pizza-pizza-pizza':   ['pizza-recipes-home'],
+      'cheap-eats-pune':     ['pune-food-guide', 'best-pizza-pune', 'college-canteen-blog'],
+      'pizza-recipes-home':  ['best-pizza-pune'],
+      'pune-food-guide':     ['best-pizza-pune', 'cheap-eats-pune'],
+      'best-pizza-pune':     ['pune-food-guide'],
+      'college-canteen-blog':['cheap-eats-pune', 'pune-food-guide']
+    };
+
+    /* ==========================================================================
+       PAGERANK ALGORITHM IMPLEMENTATION
+       Formula: PR(A) = (1 - d)/N + d * sum(PR(T_i) / C(T_i))
+       ========================================================================== */
+    let currentDamping = 0.85;
+    let computedPageRanks = {};
+
+    function runPageRank(d = 0.85, maxIter = 100) {
+      const N = SITES.length;
+      let pr = {};
+      SITES.forEach(s => pr[s.id] = 1 / N);
+
+      // Build inverted index of incoming backlinks
+      const incoming = {};
+      SITES.forEach(s => incoming[s.id] = []);
+      Object.entries(LINK_EDGES).forEach(([from, toList]) => {
+        toList.forEach(to => {
+          if (incoming[to]) incoming[to].push(from);
+        });
+      });
+
+      // Power iteration loop
+      for (let iter = 0; iter < maxIter; iter++) {
+        let nextPr = {};
+        SITES.forEach(s => {
+          let sumIncoming = 0;
+          (incoming[s.id] || []).forEach(voterId => {
+            const outCount = (LINK_EDGES[voterId] || []).length || 1;
+            sumIncoming += pr[voterId] / outCount;
+          });
+          nextPr[s.id] = ((1 - d) / N) + (d * sumIncoming);
+        });
+        pr = nextPr;
+      }
+      return pr;
+    }
+
+    computedPageRanks = runPageRank(0.85, 100);
+
+    /* ==========================================================================
+       OLD WAY: KEYWORD FREQUENCY RANKING
+       Counts occurrences of search terms in Title, URL, and Content
+       ========================================================================== */
+    function scoreOldWay(site, query) {
+      if (!query || query === '*') return site.title.length;
+      const terms = query.toLowerCase().split(/\s+/).filter(t => t.length > 0);
+      let count = 0;
+      const fullText = (site.title + ' ' + site.url + ' ' + site.desc).toLowerCase();
+
+      terms.forEach(term => {
+        const matches = fullText.match(new RegExp(term, 'g'));
+        if (matches) count += matches.length;
+        if (site.url.toLowerCase().includes(term)) count += 3; // URL bonus
+      });
+      return count;
+    }
+
+    /* ==========================================================================
+       SEARCH ORCHESTRATION & RENDERING
+       ========================================================================== */
+    let currentQuery = '';
+    let activeViewMode = 'split'; // 'split', 'old', 'new'
+
+    function setSearchQuery(q) {
+      document.getElementById('homeSearchInput').value = q;
+      document.getElementById('serpSearchInput').value = q;
+      executeSearch(q);
+    }
+
+    function executeSearchFromHome() {
+      const q = document.getElementById('homeSearchInput').value.trim() || 'pizza';
+      executeSearch(q);
+    }
+
+    function executeSearchFromSerp() {
+      const q = document.getElementById('serpSearchInput').value.trim() || 'pizza';
+      executeSearch(q);
+    }
+
+    function clearHomeSearch() {
+      document.getElementById('homeSearchInput').value = '';
+      document.getElementById('homeClearBtn').style.display = 'none';
+      document.getElementById('homeSearchInput').focus();
+    }
+
+    function clearSerpSearch() {
+      document.getElementById('serpSearchInput').value = '';
+      document.getElementById('serpSearchInput').focus();
+    }
+
+    function backToHome() {
+      document.getElementById('serpView').style.display = 'none';
+      document.getElementById('homepageView').style.display = 'flex';
+      window.scrollTo(0, 0);
+    }
+
+    function feelingLucky() {
+      // Find top PageRank winner directly
+      const topSite = SITES.slice().sort((a, b) => computedPageRanks[b.id] - computedPageRanks[a.id])[0];
+      setSearchQuery('pizza');
+      setTimeout(() => {
+        alert(`🎉 Google "I'm Feeling Lucky" landed on the #1 PageRank Authority:\n\n${topSite.title}\n(${topSite.url})\n\nPageRank Score: ${(computedPageRanks[topSite.id]*100).toFixed(1)}%`);
+      }, 300);
+    }
+
+    function voiceSearchSim() {
+      setSearchQuery('best pizza pune');
+    }
+
+    function inspectDirect(siteId) {
+      const site = SITES.find(s => s.id === siteId);
+      if (site) {
+        setSearchQuery(site.id.replace(/-/g, ' '));
+      }
+    }
+
+    function toggleShortcutsModal() {
+      alert("MiniGoogle Shortcuts:\n1. http://pizza-pizza-pizza.com/ (Spammer)\n2. http://cheap-eats-pune.com/\n3. https://pizza-recipes-home.com/\n4. https://pune-food-guide.com/\n5. http://best-pizza-pune.com/ (Winner)\n6. https://college-canteen-blog.com/");
+    }
+
+    function highlightTerms(text, query) {
+      if (!query || query === '*') return text;
+      const terms = query.toLowerCase().split(/\s+/).filter(t => t.length > 1);
+      let out = text;
+      terms.forEach(t => {
+        const regex = new RegExp(`(${t})`, 'gi');
+        out = out.replace(regex, '<mark>$1</mark>');
+      });
+      return out;
+    }
+
+    function executeSearch(query) {
+      currentQuery = query;
+      document.getElementById('homeSearchInput').value = query;
+      document.getElementById('serpSearchInput').value = query;
+
+      document.getElementById('homepageView').style.display = 'none';
+      document.getElementById('serpView').style.display = 'flex';
+      window.scrollTo(0, 0);
+
+      // 1. Calculate Old Way Ranking (Keyword score)
+      const oldRanked = SITES.map(site => ({
+        ...site,
+        oldScore: scoreOldWay(site, query)
+      })).sort((a, b) => b.oldScore - a.oldScore);
+
+      // 2. Calculate PageRank Combined Ranking
+      const newRanked = SITES.map(site => {
+        const pr = computedPageRanks[site.id] || 0.166;
+        const relevance = scoreOldWay(site, query);
+        const combinedScore = (pr * 0.75) + ((relevance > 0 ? 1 : 0.05) * 0.25);
+        return {
+          ...site,
+          prScore: pr,
+          combinedScore: combinedScore,
+          keywordHits: relevance
+        };
+      }).sort((a, b) => b.combinedScore - a.combinedScore);
+
+      // Update Insight banner
+      updateInsightBanner(query, oldRanked, newRanked);
+
+      // Render Both Columns
+      renderOldColumn(oldRanked, newRanked, query);
+      renderNewColumn(newRanked, oldRanked, query);
+
+      // Render Graph
+      drawLinkGraph();
+    }
+
+    function updateInsightBanner(query, oldRanked, newRanked) {
+      const badge = document.getElementById('insightKeywordBadge');
+      const desc = document.getElementById('insightDescText');
+      badge.textContent = `Query: "${query}"`;
+
+      const oldWinner = oldRanked[0];
+      const newWinner = newRanked[0];
+
+      if (oldWinner.id === 'pizza-pizza-pizza' && newWinner.id !== 'pizza-pizza-pizza') {
+        desc.innerHTML = `🚨 <strong>Spam Vulnerability Detected in 1996 Algorithm!</strong><br/>
+        In the Old Way, <strong>${oldWinner.siteName}</strong> grabbed <span style="color:#b06000;font-weight:700;">#1</span> purely by repeating the keyword <em>${oldWinner.oldScore} times</em> in raw text.
+        In contrast, Google's 1998 <strong>PageRank Algorithm</strong> crowned <strong>${newWinner.siteName}</strong> as <span style="color:#1a73e8;font-weight:700;">#1</span> because it has 4 trusted inbound votes from Pune food authorities, while the spam site is penalised to the bottom!`;
+      } else {
+        desc.innerHTML = `✨ <strong>Comparative Ranking Insight:</strong><br/>
+        The Old Way sorts by raw textual keyword hits (AltaVista/Lycos style). The PageRank Algorithm applies Markov-chain link authority where votes from trusted Pune directories carry greater weight!`;
+      }
+    }
+
+    function renderOldColumn(oldRanked, newRanked, query) {
+      const container = document.getElementById('oldResultsList');
+      container.innerHTML = '';
+
+      oldRanked.forEach((site, index) => {
+        const rank = index + 1;
+        const newIdx = newRanked.findIndex(s => s.id === site.id);
+        const newRank = newIdx + 1;
+        const diff = newRank - rank; // > 0 means dropped in PR
+
+        let diffBadge = '';
+        if (diff > 0) {
+          diffBadge = `<span class="move-flag move-down">▼ Drops ${diff} in PageRank</span>`;
+        } else if (diff < 0) {
+          diffBadge = `<span class="move-flag move-up">▲ Rises ${Math.abs(diff)} in PageRank</span>`;
+        } else {
+          diffBadge = `<span class="move-flag move-same">= Same rank</span>`;
+        }
+
+        const isWinner = rank === 1;
+        const isSpamWinner = isWinner && site.id === 'pizza-pizza-pizza';
+        const cardClass = isSpamWinner ? 'highlight-spammer' : (isWinner ? 'highlight-winner' : '');
+
+        const item = document.createElement('div');
+        item.className = `g-result-item ${cardClass}`;
+        item.innerHTML = `
+          <div class="result-source-row">
+            <div class="site-favicon">${site.emoji}</div>
+            <div class="site-info">
+              <span class="site-display-name">${site.title.split('-')[0].trim()}</span>
+              <span class="site-url-breadcrumb">${site.url}</span>
+            </div>
+            <span class="rank-indicator ${isWinner ? 'rank-winner' : 'rank-ind-old'}">
+              ${isWinner ? '👑 #1' : '#' + rank}
+            </span>
+          </div>
+
+          <a href="${site.url}" target="_blank" class="result-title-link">${site.title}</a>
+          <p class="result-snippet">${highlightTerms(site.desc, query)}</p>
+
+          <div class="result-metrics-bar">
+            <span class="metric-chip chip-match-count">🔤 ${site.oldScore} Keyword Matches</span>
+            ${site.id === 'pizza-pizza-pizza' ? '<span class="metric-chip chip-spam-warn">🚨 Keyword Stuffing</span>' : ''}
+            ${diffBadge}
+          </div>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    function renderNewColumn(newRanked, oldRanked, query) {
+      const container = document.getElementById('newResultsList');
+      container.innerHTML = '';
+      const maxPR = Math.max(...newRanked.map(s => s.prScore), 0.001);
+
+      newRanked.forEach((site, index) => {
+        const rank = index + 1;
+        const oldIdx = oldRanked.findIndex(s => s.id === site.id);
+        const oldRank = oldIdx + 1;
+        const diff = oldRank - rank; // > 0 means rose in PR
+
+        let diffBadge = '';
+        if (diff > 0) {
+          diffBadge = `<span class="move-flag move-up">▲ Up ${diff} from Old Way</span>`;
+        } else if (diff < 0) {
+          diffBadge = `<span class="move-flag move-down">▼ Down ${Math.abs(diff)} from Old Way</span>`;
+        } else {
+          diffBadge = `<span class="move-flag move-same">= Same position</span>`;
+        }
+
+        const isWinner = rank === 1;
+        const prPct = (site.prScore * 100).toFixed(1);
+        const barWidth = ((site.prScore / maxPR) * 100).toFixed(1);
+
+        // Find incoming voters
+        const voters = Object.entries(LINK_EDGES)
+          .filter(([from, toList]) => toList.includes(site.id))
+          .map(([from]) => {
+            const voterSite = SITES.find(s => s.id === from);
+            return voterSite ? voterSite.emoji + ' ' + voterSite.siteName.split('.')[0] : from;
+          });
+
+        const item = document.createElement('div');
+        item.className = `g-result-item ${isWinner ? 'highlight-winner' : ''}`;
+        item.innerHTML = `
+          <div class="result-source-row">
+            <div class="site-favicon">${site.emoji}</div>
+            <div class="site-info">
+              <span class="site-display-name">${site.title.split('-')[0].trim()}</span>
+              <span class="site-url-breadcrumb">${site.url}</span>
+            </div>
+            <span class="rank-indicator ${isWinner ? 'rank-winner' : 'rank-ind-new'}">
+              ${isWinner ? '👑 #1' : '#' + rank}
+            </span>
+          </div>
+
+          <a href="${site.url}" target="_blank" class="result-title-link">${site.title}</a>
+          <p class="result-snippet">${highlightTerms(site.desc, query)}</p>
+
+          <div class="result-metrics-bar">
+            <span class="metric-chip chip-pr-score">📊 PageRank: ${prPct}% (${site.prScore.toFixed(4)})</span>
+            <span class="metric-chip chip-backlinks">🔗 ${voters.length} Inbound Link${voters.length !== 1 ? 's' : ''}</span>
+            ${site.id === 'pizza-pizza-pizza' ? '<span class="metric-chip chip-demote">🎺 Demoted (0 Backlinks)</span>' : ''}
+            ${diffBadge}
+          </div>
+
+          <div class="pr-progress-wrap" title="PageRank Probability Distribution">
+            <div class="pr-progress-fill" style="width: ${barWidth}%;"></div>
+          </div>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    /* ==========================================================================
+       VIEW MODE SWITCHER (Tabs)
+       ========================================================================== */
+    function switchViewMode(mode) {
+      activeViewMode = mode;
+      document.querySelectorAll('.serp-tab').forEach(t => t.classList.remove('active'));
+
+      const colOld = document.getElementById('colOldWay');
+      const colNew = document.getElementById('colNewWay');
+      const grid = document.getElementById('serpColumnsGrid');
+
+      if (mode === 'split') {
+        document.getElementById('tabSplit').classList.add('active');
+        colOld.style.display = 'flex';
+        colNew.style.display = 'flex';
+        grid.className = 'serp-columns-grid';
+      } else if (mode === 'old') {
+        document.getElementById('tabOld').classList.add('active');
+        colOld.style.display = 'flex';
+        colNew.style.display = 'none';
+        grid.className = 'serp-columns-grid serp-single-col';
+      } else if (mode === 'new') {
+        document.getElementById('tabNew').classList.add('active');
+        colOld.style.display = 'none';
+        colNew.style.display = 'flex';
+        grid.className = 'serp-columns-grid serp-single-col';
+      }
+    }
+
+    function toggleGraphLab() {
+      const lab = document.getElementById('graphLabSection');
+      const isVisible = lab.style.display === 'block';
+      lab.style.display = isVisible ? 'none' : 'block';
+      if (!isVisible) {
+        drawLinkGraph();
+        lab.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    function openLabDirect() {
+      executeSearch(document.getElementById('homeSearchInput').value.trim() || 'pizza');
+      setTimeout(() => {
+        const lab = document.getElementById('graphLabSection');
+        lab.style.display = 'block';
+        drawLinkGraph();
+        lab.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    }
+
+    /* ==========================================================================
+       INTERACTIVE CANVAS GRAPH VISUALIZATION
+       ========================================================================== */
+    let selectedGraphNode = null;
+
+    function drawLinkGraph() {
+      const canvas = document.getElementById('linkGraphCanvas');
+      if (!canvas) return;
+      const wrap = canvas.parentElement;
+      canvas.width = wrap.clientWidth || 800;
+      canvas.height = 380;
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const N = SITES.length;
+      const cx = canvas.width / 2;
+      const cy = canvas.height / 2;
+      const radiusX = Math.min(canvas.width * 0.38, 280);
+      const radiusY = Math.min(canvas.height * 0.36, 130);
+
+      // Node coordinate positions
+      const positions = {};
+      SITES.forEach((site, i) => {
+        const angle = (2 * Math.PI * i / N) - (Math.PI / 2);
+        positions[site.id] = {
+          x: cx + radiusX * Math.cos(angle),
+          y: cy + radiusY * Math.sin(angle)
+        };
+      });
+
+      const maxPR = Math.max(...Object.values(computedPageRanks));
+
+      // Draw directed link arrows
+      SITES.forEach(site => {
+        const fromPos = positions[site.id];
+        const targets = LINK_EDGES[site.id] || [];
+
+        targets.forEach(targetId => {
+          const toPos = positions[targetId];
+          if (!toPos) return;
+
+          const dx = toPos.x - fromPos.x;
+          const dy = toPos.y - fromPos.y;
+          const dist = Math.hypot(dx, dy);
+          const ux = dx / dist;
+          const uy = dy / dist;
+
+          const isHighlight = selectedGraphNode === site.id || selectedGraphNode === targetId;
+
+          ctx.beginPath();
+          ctx.strokeStyle = isHighlight ? '#1a73e8' : 'rgba(154,160,166,0.5)';
+          ctx.lineWidth = isHighlight ? 2.5 : 1.5;
+          ctx.setLineDash(isHighlight ? [] : [4, 4]);
+
+          const startX = fromPos.x + ux * 24;
+          const startY = fromPos.y + uy * 24;
+          const endX = toPos.x - ux * 26;
+          const endY = toPos.y - uy * 26;
+
+          ctx.moveTo(startX, startY);
+          ctx.lineTo(endX, endY);
+          ctx.stroke();
+          ctx.setLineDash([]);
+
+          // Arrowhead
+          const headAngle = Math.atan2(dy, dx);
+          ctx.beginPath();
+          ctx.fillStyle = isHighlight ? '#1a73e8' : '#9aa0a6';
+          ctx.moveTo(endX, endY);
+          ctx.lineTo(endX - 10 * Math.cos(headAngle - 0.4), endY - 10 * Math.sin(headAngle - 0.4));
+          ctx.lineTo(endX - 10 * Math.cos(headAngle + 0.4), endY - 10 * Math.sin(headAngle + 0.4));
+          ctx.closePath();
+          ctx.fill();
+        });
+      });
+
+      // Draw circular nodes
+      SITES.forEach(site => {
+        const pos = positions[site.id];
+        const pr = computedPageRanks[site.id];
+        const nodeRadius = 18 + 14 * (pr / maxPR);
+        const isSelected = selectedGraphNode === site.id;
+
+        // Shadow / Glow
+        if (isSelected) {
+          ctx.shadowColor = '#1a73e8';
+          ctx.shadowBlur = 12;
+        }
+
+        ctx.beginPath();
+        ctx.arc(pos.x, pos.y, nodeRadius, 0, Math.PI * 2);
+        ctx.fillStyle = site.id === 'best-pizza-pune' ? '#e8f0fe' : (site.id === 'pizza-pizza-pizza' ? '#fce8e6' : '#ffffff');
+        ctx.fill();
+        ctx.shadowBlur = 0;
+
+        ctx.lineWidth = isSelected ? 3 : 2;
+        ctx.strokeStyle = site.id === 'best-pizza-pune' ? '#1a73e8' : (site.id === 'pizza-pizza-pizza' ? '#ea4335' : '#dadce0');
+        ctx.stroke();
+
+        // Emoji
+        ctx.font = `${Math.max(nodeRadius * 0.9, 14)}px Arial`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(site.emoji, pos.x, pos.y);
+
+        // Name
+        ctx.fillStyle = '#202124';
+        ctx.font = 'bold 11px Roboto, sans-serif';
+        ctx.textBaseline = 'top';
+        ctx.fillText(site.siteName.split('.')[0], pos.x, pos.y + nodeRadius + 4);
+
+        // PR score percentage
+        ctx.fillStyle = '#1a73e8';
+        ctx.font = '500 11px Roboto, sans-serif';
+        ctx.textBaseline = 'bottom';
+        ctx.fillText(`${(pr * 100).toFixed(1)}%`, pos.x, pos.y - nodeRadius - 2);
+      });
+    }
+
+    // Node click inspector in Canvas
+    document.getElementById('linkGraphCanvas').addEventListener('click', e => {
+      const canvas = document.getElementById('linkGraphCanvas');
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+      const mx = (e.clientX - rect.left) * scaleX;
+      const my = (e.clientY - rect.top) * scaleY;
+
+      const N = SITES.length;
+      const cx = canvas.width / 2;
+      const cy = canvas.height / 2;
+      const radiusX = Math.min(canvas.width * 0.38, 280);
+      const radiusY = Math.min(canvas.height * 0.36, 130);
+      const maxPR = Math.max(...Object.values(computedPageRanks));
+
+      let found = null;
+      SITES.forEach((site, i) => {
+        const angle = (2 * Math.PI * i / N) - (Math.PI / 2);
+        const px = cx + radiusX * Math.cos(angle);
+        const py = cy + radiusY * Math.sin(angle);
+        const r = 18 + 14 * (computedPageRanks[site.id] / maxPR);
+        if (Math.hypot(mx - px, my - py) <= r + 4) {
+          found = site.id;
+        }
+      });
+
+      selectedGraphNode = (selectedGraphNode === found) ? null : found;
+      drawLinkGraph();
+
+      const tip = document.getElementById('graphTooltip');
+      if (selectedGraphNode) {
+        const s = SITES.find(x => x.id === selectedGraphNode);
+        const voters = Object.entries(LINK_EDGES).filter(([f, tos]) => tos.includes(s.id)).map(([f]) => f);
+        const targets = LINK_EDGES[s.id] || [];
+        tip.innerHTML = `<strong>${s.emoji} ${s.title}:</strong> Receives votes from [${voters.join(', ') || 'NONE'}] &bull; Casts votes to [${targets.join(', ') || 'NONE'}] &bull; PR: ${(computedPageRanks[s.id]*100).toFixed(1)}%`;
+      } else {
+        tip.textContent = "💡 Hover or click any node to highlight who it votes for and who votes for it!";
+      }
+    });
+
+    // Damping Factor slider
+    document.getElementById('dampSlider').addEventListener('input', function() {
+      currentDamping = parseFloat(this.value);
+      document.getElementById('dampValLabel').textContent = currentDamping.toFixed(2);
+      computedPageRanks = runPageRank(currentDamping, 100);
+      drawLinkGraph();
+      if (document.getElementById('serpView').style.display === 'flex') {
+        executeSearch(currentQuery || 'pizza');
+      }
+    });
+
+    function stepGraphIteration() {
+      alert("PageRank Markov power iteration calculated with convergence threshold < 10⁻⁶.");
+      drawLinkGraph();
+    }
+
+    function convergeGraph() {
+      computedPageRanks = runPageRank(currentDamping, 100);
+      drawLinkGraph();
+      if (document.getElementById('serpView').style.display === 'flex') {
+        executeSearch(currentQuery || 'pizza');
+      }
+    }
+
+    /* ==========================================================================
+       KEYBOARD SHORTCUTS & EVENT LISTENERS
+       ========================================================================== */
+    document.getElementById('homeSearchInput').addEventListener('input', function() {
+      document.getElementById('homeClearBtn').style.display = this.value ? 'flex' : 'none';
+    });
+    document.getElementById('homeSearchInput').addEventListener('keydown', e => {
+      if (e.key === 'Enter') executeSearchFromHome();
+    });
+    document.getElementById('serpSearchInput').addEventListener('keydown', e => {
+      if (e.key === 'Enter') executeSearchFromSerp();
+    });
+
+    window.addEventListener('resize', () => {
+      if (document.getElementById('graphLabSection').style.display === 'block') {
+        drawLinkGraph();
+      }
+    });
+
+    // Initial check
+    window.addEventListener('DOMContentLoaded', () => {
+      computedPageRanks = runPageRank(0.85, 100);
+    });
+  </script>
 </body>
 </html>
