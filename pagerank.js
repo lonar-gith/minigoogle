@@ -1,7 +1,8 @@
 /* =============================================
-   PAGERANK ENGINE
-   Implements the iterative PageRank algorithm
-   with a simulated link graph for the 6 mini-web pages.
+   PAGERANK ENGINE — PIZZAGOOGLE
+   6 Pune food sites with realistic link graph.
+   pizza-pizza-pizza.com = keyword spammer (wins OLD, loses PageRank)
+   best-pizza-pune.com   = authority (wins PageRank)
    ============================================= */
 
 const PAGES = [
@@ -9,166 +10,178 @@ const PAGES = [
     id: 'pizza-pizza-pizza',
     url: 'http://pizza-pizza-pizza.com/',
     title: 'Pizza Pizza Pizza',
-    desc: 'The ultimate pizza destination. Tons of pizza recipes, pizza deals, pizza toppings and everything about pizza pizza pizza!',
-    keywords: ['pizza', 'pizza pizza', 'toppings', 'deals', 'cheese', 'crust', 'pepperoni'],
+    desc: 'Pizza pizza pizza! Best pizza pizza pizza toppings. Pizza pizza pizza crust. Pizza pizza cheese. Pizza pizza deal! Pizza pizza pizza lovers, this is the ultimate pizza pizza pizza destination. Pizza pizza pizza every day, every meal—pizza pizza pizza is life! Get pizza pizza pizza now!',
+    keywords: ['pizza','pizza pizza','pizza pizza pizza','pizza toppings','pizza crust','pizza cheese','pizza deal','best pizza'],
+    mascotEmoji: '🦝',
+    mascotBg:    'linear-gradient(135deg,#E5E7EB,#D1D5DB)',
+    mascotName:  'Sneaky Raccoon',
+    mascotLabel: 'The Keyword Spammer 🚨',
+    siteNum: 1,
   },
   {
     id: 'cheap-eats-pune',
     url: 'http://cheap-eats-pune.com/',
     title: 'Cheap Eats Pune',
-    desc: 'Find the best cheap eats in Pune. Affordable food options, budget restaurants, street food and canteen meals in Pune city.',
-    keywords: ['cheap eats', 'pune', 'budget food', 'affordable', 'street food', 'restaurants', 'canteen'],
+    desc: 'Find the best cheap eats in Pune! Affordable food options, budget restaurants, street food stalls, vada pav corners, and canteen meals for college students in Pune city.',
+    keywords: ['cheap eats','pune','budget food','affordable','street food','restaurants','canteen','vada pav','chai'],
+    mascotEmoji: '🧓',
+    mascotBg:    'linear-gradient(135deg,#FEF3C7,#FDE68A)',
+    mascotName:  'Bargain Bhaiya',
+    mascotLabel: 'Budget Food Expert 💰',
+    siteNum: 2,
   },
   {
     id: 'pizza-recipes-home',
     url: 'https://pizza-recipes-home.com/',
     title: 'Pizza Recipes Home',
-    desc: 'Home-made pizza recipes for every occasion. Easy dough, sauce recipes, and topping combinations for the perfect homemade pizza.',
-    keywords: ['pizza recipes', 'homemade pizza', 'dough', 'sauce', 'toppings', 'recipe', 'bake'],
+    desc: 'Homemade pizza recipes for every occasion! Easy dough and sauce recipes, topping combinations, baking tips for the perfect homemade pizza from your own kitchen.',
+    keywords: ['pizza recipes','homemade pizza','dough','sauce','toppings','recipe','bake','rolling dough','oven'],
+    mascotEmoji: '👵',
+    mascotBg:    'linear-gradient(135deg,#FCE7F3,#FBCFE8)',
+    mascotName:  'Nani Chef',
+    mascotLabel: 'Home Recipe Queen 🫙',
+    siteNum: 3,
   },
   {
     id: 'pune-food-guide',
     url: 'https://pune-food-guide.com/',
     title: 'Pune Food Guide',
-    desc: 'Your complete guide to food in Pune. Restaurants, cafes, street food, food reviews and culinary events in Pune.',
-    keywords: ['pune food', 'restaurants', 'guide', 'cafes', 'reviews', 'culinary', 'street food', 'pune'],
+    desc: 'Your complete guide to food in Pune! Best restaurants, cafes, street food, food reviews and culinary events across Pune city. Find cheap eats, canteen spots, and hidden food gems.',
+    keywords: ['pune food','restaurants','guide','cafes','reviews','culinary','street food','pune','food'],
+    mascotEmoji: '🐼',
+    mascotBg:    'linear-gradient(135deg,#DBEAFE,#BFDBFE)',
+    mascotName:  'Pune Panda',
+    mascotLabel: 'City Food Guide 🗺️',
+    siteNum: 4,
   },
   {
     id: 'best-pizza-pune',
     url: 'http://best-pizza-pune.com/',
     title: 'Best Pizza in Pune',
-    desc: 'Discover the best pizza places in Pune. Reviews, ratings, and rankings of Pune\'s top pizza restaurants and delivery.',
-    keywords: ['best pizza', 'pune', 'pizza restaurant', 'delivery', 'ratings', 'reviews'],
+    desc: 'Discover the best pizza places in Pune! Expert reviews, star ratings, and rankings of Pune\'s top pizza restaurants and delivery joints. The definitive pizza authority for Pune foodies.',
+    keywords: ['best pizza','pune','pizza restaurant','delivery','ratings','reviews','pizza pune','top pizza'],
+    mascotEmoji: '🐱',
+    mascotBg:    'linear-gradient(135deg,#FEF3C7,#FBBF24)',
+    mascotName:  'Royal Chef Cat',
+    mascotLabel: 'Pizza Authority 👑',
+    siteNum: 5,
   },
   {
     id: 'college-canteen-blog',
     url: 'https://college-canteen-blog.com/',
     title: 'College Canteen Blog',
-    desc: 'A blog about college canteen food experiences across India. Budget meals, canteen reviews, cheap eats and student food hacks.',
-    keywords: ['college canteen', 'blog', 'budget meals', 'student food', 'canteen reviews', 'cheap', 'india'],
+    desc: 'A blog about college canteen food experiences across Pune and India. Budget canteen meals, student food hacks, cheap eats, and canteen reviews for college life.',
+    keywords: ['college canteen','blog','budget meals','student food','canteen reviews','cheap','india','pune','food'],
+    mascotEmoji: '😴',
+    mascotBg:    'linear-gradient(135deg,#EDE9FE,#DDD6FE)',
+    mascotName:  'Sleepy Student',
+    mascotLabel: 'Campus Foodie 🏫',
+    siteNum: 6,
   },
 ];
 
 /*
-  SIMULATED LINK GRAPH (who links to whom)
-  Based on logical topical connections between the 6 pages.
-
-  Format: links[fromId] = [toId, toId, ...]
+  LINK GRAPH (directed: who links to whom)
+  Designed so:
+  - pizza-pizza-pizza.com gets few links (spammer; wins OLD, loses PageRank)
+  - best-pizza-pune.com gets MOST links (authority; wins PageRank)
+  - pune-food-guide.com is a hub (links many, receives many)
 */
 const LINK_GRAPH = {
-  'pizza-pizza-pizza':   ['pizza-recipes-home', 'best-pizza-pune'],
-  'cheap-eats-pune':     ['pune-food-guide', 'college-canteen-blog', 'best-pizza-pune'],
-  'pizza-recipes-home':  ['pizza-pizza-pizza', 'best-pizza-pune'],
-  'pune-food-guide':     ['cheap-eats-pune', 'best-pizza-pune', 'college-canteen-blog'],
-  'best-pizza-pune':     ['pune-food-guide', 'pizza-pizza-pizza'],
-  'college-canteen-blog':['cheap-eats-pune', 'pune-food-guide'],
+  'pizza-pizza-pizza':    ['pizza-recipes-home'],                                     // 1 outgoing, only 2 incoming
+  'cheap-eats-pune':      ['pune-food-guide', 'college-canteen-blog', 'best-pizza-pune'], // 3 outgoing
+  'pizza-recipes-home':   ['pizza-pizza-pizza', 'best-pizza-pune'],                   // 2 outgoing
+  'pune-food-guide':      ['cheap-eats-pune', 'best-pizza-pune', 'college-canteen-blog'], // 3 outgoing, 3 incoming
+  'best-pizza-pune':      ['pune-food-guide', 'pizza-pizza-pizza'],                   // 2 outgoing, 3 incoming
+  'college-canteen-blog': ['cheap-eats-pune', 'pune-food-guide'],                     // 2 outgoing
 };
 
-/*
-  PAGERANK COMPUTATION
-  Standard iterative algorithm with damping factor d = 0.85
-  Runs for N iterations until convergence.
-*/
+/*  PageRank algorithm (iterative, damping factor configurable) */
 function computePageRank(pages, linkGraph, dampingFactor = 0.85, iterations = 100) {
-  const N = pages.length;
+  const N   = pages.length;
   const ids = pages.map(p => p.id);
 
-  // Initialize all PR values equally
   let pr = {};
   ids.forEach(id => pr[id] = 1 / N);
 
-  // Build incoming links index
-  const incomingLinks = {};
-  ids.forEach(id => incomingLinks[id] = []);
+  const inLinks = {};
+  ids.forEach(id => inLinks[id] = []);
   ids.forEach(from => {
-    (linkGraph[from] || []).forEach(to => {
-      incomingLinks[to].push(from);
-    });
+    (linkGraph[from] || []).forEach(to => inLinks[to].push(from));
   });
 
-  // Iterative computation
-  for (let iter = 0; iter < iterations; iter++) {
-    const newPr = {};
+  for (let i = 0; i < iterations; i++) {
+    const next = {};
     ids.forEach(id => {
       let rank = (1 - dampingFactor) / N;
-      incomingLinks[id].forEach(inId => {
-        const outLinks = (linkGraph[inId] || []).length || 1;
-        rank += dampingFactor * (pr[inId] / outLinks);
+      inLinks[id].forEach(inId => {
+        const outCount = (linkGraph[inId] || []).length || 1;
+        rank += dampingFactor * (pr[inId] / outCount);
       });
-      newPr[id] = rank;
+      next[id] = rank;
     });
-    pr = newPr;
+    pr = next;
   }
-
   return pr;
 }
 
-/*
-  OLD WAY — Keyword Frequency Scoring
-  Scores a page by counting keyword overlaps with the query.
-  Also gives bonus for keyword in URL and title.
-*/
+/*  Old keyword-frequency scoring */
 function computeOldRanking(pages, query) {
-  const q = query.toLowerCase().split(/\s+/).filter(Boolean);
-
+  const q = query === '*' ? [] : query.toLowerCase().split(/\s+/).filter(Boolean);
   return pages.map(page => {
     let score = 0;
-    const titleLower = page.title.toLowerCase();
-    const descLower  = page.desc.toLowerCase();
-    const urlLower   = page.url.toLowerCase();
-
-    q.forEach(word => {
-      // Count in title (high weight)
-      const titleMatches = (titleLower.match(new RegExp(word, 'g')) || []).length;
-      score += titleMatches * 3;
-
-      // Count in URL
-      if (urlLower.includes(word)) score += 2;
-
-      // Count in description
-      const descMatches = (descLower.match(new RegExp(word, 'g')) || []).length;
-      score += descMatches * 1;
-
-      // Keyword list match (simulates meta keywords tag)
-      page.keywords.forEach(kw => {
-        if (kw.toLowerCase().includes(word)) score += 2;
+    if (q.length === 0) {
+      // star query: score by title length (all show)
+      score = page.title.length;
+    } else {
+      const title = page.title.toLowerCase();
+      const desc  = page.desc.toLowerCase();
+      const url   = page.url.toLowerCase();
+      q.forEach(word => {
+        score += (title.match(new RegExp(word, 'g')) || []).length * 3;
+        score += url.includes(word) ? 2 : 0;
+        score += (desc.match(new RegExp(word, 'g')) || []).length * 1;
+        page.keywords.forEach(kw => { if (kw.toLowerCase().includes(word)) score += 2; });
       });
-    });
-
+    }
     return { ...page, score };
   }).sort((a, b) => b.score - a.score);
 }
 
-/*
-  NEW WAY — PageRank + Relevance
-  Combines pre-computed PageRank with a relevance multiplier.
-*/
-const PAGE_RANKS = computePageRank(PAGES, LINK_GRAPH);
+/*  PageRank + relevance combined scoring */
+let PAGE_RANKS = computePageRank(PAGES, LINK_GRAPH, 0.85, 100);
 
-function computePageRankRanking(pages, query) {
-  const q = query.toLowerCase().split(/\s+/).filter(Boolean);
-
+function computePageRankRanking(pages, query, pr = PAGE_RANKS) {
+  const q = query === '*' ? [] : query.toLowerCase().split(/\s+/).filter(Boolean);
   return pages.map(page => {
     let relevance = 0;
-    const titleLower = page.title.toLowerCase();
-    const descLower  = page.desc.toLowerCase();
-
-    q.forEach(word => {
-      if (titleLower.includes(word)) relevance += 1;
-      if (descLower.includes(word))  relevance += 0.5;
-    });
-
-    // If not relevant at all, still show but with very low score
-    const relevanceFactor = relevance > 0 ? (1 + relevance * 0.3) : 0.1;
-    const score = PAGE_RANKS[page.id] * relevanceFactor;
-
-    return { ...page, score, pageRank: PAGE_RANKS[page.id] };
+    if (q.length > 0) {
+      const title = page.title.toLowerCase();
+      const desc  = page.desc.toLowerCase();
+      q.forEach(word => {
+        if (title.includes(word)) relevance += 1;
+        if (desc.includes(word))  relevance += 0.5;
+      });
+    } else {
+      relevance = 1; // star = show all
+    }
+    const relevanceFactor = relevance > 0 ? (1 + relevance * 0.25) : 0.08;
+    return { ...page, score: pr[page.id] * relevanceFactor, pageRank: pr[page.id] };
   }).sort((a, b) => b.score - a.score);
 }
 
-// Export
-window.PAGES = PAGES;
-window.LINK_GRAPH = LINK_GRAPH;
-window.PAGE_RANKS = PAGE_RANKS;
-window.computeOldRanking = computeOldRanking;
-window.computePageRankRanking = computePageRankRanking;
+// Count keyword occurrences in full text (for display)
+function countKeyword(page, query) {
+  if (!query || query === '*') return 0;
+  const q    = query.toLowerCase();
+  const text = (page.title + ' ' + page.desc).toLowerCase();
+  return (text.match(new RegExp(q.split(/\s+/)[0], 'g')) || []).length;
+}
+
+window.PAGES            = PAGES;
+window.LINK_GRAPH       = LINK_GRAPH;
+window.PAGE_RANKS       = PAGE_RANKS;
+window.computePageRank  = computePageRank;
+window.computeOldRanking       = computeOldRanking;
+window.computePageRankRanking  = computePageRankRanking;
+window.countKeyword            = countKeyword;

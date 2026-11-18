@@ -1,107 +1,259 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MiniGoogle 🔍</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PizzaGoogle 🍕</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header class="header">
-    <div class="logo-wrap">
-      <span class="logo">Mini<span class="logo-g">G</span><span class="logo-o1">o</span><span class="logo-o2">o</span><span class="logo-g2">g</span><span class="logo-l">l</span><span class="logo-e">e</span></span>
+  <!-- ═══ TOP NAV ═══ -->
+  <header class="topnav">
+    <div class="topnav-left">
+      <span class="topnav-pizza">🍕</span>
+      <span class="topnav-brand">
+        <span style="color:#4285F4">P</span><span style="color:#EA4335">i</span><span style="color:#FBBC05">z</span><span style="color:#4285F4">z</span><span style="color:#34A853">a</span><span style="color:#EA4335">G</span><span style="color:#FBBC05">o</span><span style="color:#4285F4">o</span><span style="color:#34A853">g</span><span style="color:#EA4335">l</span><span style="color:#FBBC05">e</span>
+      </span>
+      <span class="topnav-badge">Pune Pizza Index • 6 Sites</span>
     </div>
-    <div class="search-bar-wrap">
-      <input type="text" id="searchInput" class="search-bar" placeholder="Search the mini web..." autocomplete="off" />
-      <button class="search-btn" onclick="runSearch()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/>
-        </svg>
-      </button>
+    <div class="topnav-right">
+      <a href="#graph-section" class="topnav-pill topnav-pill-blue">🕸️ Link Graph &amp; Math Lab</a>
+      <a href="#dataset-section" class="topnav-pill topnav-pill-amber">📋 CSV Dataset</a>
     </div>
-    <p class="subtitle">Comparing <strong>Old Ranking</strong> vs <strong>PageRank Algorithm</strong></p>
   </header>
 
-  <!-- RESULTS SECTION -->
-  <main class="results-container" id="resultsSection" style="display:none;">
-    <div class="results-header">
-      <div class="col-head old-head">
-        <span class="badge old-badge">📜 Old Way</span>
-        <h2>Keyword & Frequency Ranking</h2>
-        <p>Ranks pages by counting keyword matches in title, URL, and description. More matches = higher rank. Simple but easily manipulated.</p>
+  <!-- ═══ HERO ═══ -->
+  <section class="hero">
+    <!-- Left mascot -->
+    <div class="mascot-card mascot-left">
+      <div class="mascot-avatar" style="background:linear-gradient(135deg,#FEF3C7,#FDE68A)">
+        <span style="font-size:2.2rem">🐶</span>
+        <span class="mascot-halo">😇</span>
       </div>
-      <div class="col-head new-head">
-        <span class="badge new-badge">🚀 PageRank (Google Way)</span>
-        <h2>PageRank Algorithm</h2>
-        <p>Ranks pages by the number & quality of links pointing to them. A page is important if other important pages link to it.</p>
-      </div>
-    </div>
-
-    <div class="results-grid">
-      <div class="result-col" id="oldResults"></div>
-      <div class="divider"></div>
-      <div class="result-col" id="newResults"></div>
-    </div>
-  </main>
-
-  <!-- LANDING / INFO STATE -->
-  <section class="landing" id="landingSection">
-    <div class="algo-cards">
-      <div class="algo-card old-card">
-        <div class="algo-icon">📜</div>
-        <h3>Old Way (Pre-PageRank)</h3>
-        <ul>
-          <li>🔤 Count keyword occurrences in title &amp; URL</li>
-          <li>📄 Match words in page description</li>
-          <li>🏷️ Meta tag keyword stuffing</li>
-          <li>❌ Easily gamed by spammers</li>
-          <li>❌ No notion of page quality</li>
-        </ul>
-      </div>
-      <div class="vs-badge">VS</div>
-      <div class="algo-card new-card">
-        <div class="algo-icon">🚀</div>
-        <h3>PageRank Algorithm (Google)</h3>
-        <ul>
-          <li>🔗 Counts quality inbound links</li>
-          <li>⚖️ Important pages pass more rank</li>
-          <li>🔄 Iterative computation (damping factor 0.85)</li>
-          <li>✅ Hard to game, reflects real authority</li>
-          <li>✅ Basis of modern search ranking</li>
-        </ul>
+      <div class="mascot-speech">
+        <div class="mascot-name">Professor Golden <span class="mascot-title">Chief Pizza Taster</span></div>
+        <p>"Whoa! In 1996, <strong>Sneaky Raccoon</strong> stole #1 by yelling <em>pizza</em> 10 times! Thank goodness PageRank crowned <strong>Royal Chef Cat!</strong>"</p>
       </div>
     </div>
 
-    <div class="pagerank-explainer">
-      <h3>⚙️ How PageRank Works</h3>
-      <div class="formula-box">
-        <code>PR(A) = (1 - d) + d × Σ [ PR(T<sub>i</sub>) / C(T<sub>i</sub>) ]</code>
+    <!-- Logo -->
+    <div class="logo-block">
+      <div class="logo-row-1">
+        <span class="logo-letter" style="color:#4285F4">P</span>
+        <span class="logo-letter" style="color:#EA4335">i</span>
+        <span class="logo-letter" style="color:#FBBC05">z</span>
+        <span class="logo-letter" style="color:#4285F4">z</span>
+        <span class="logo-letter" style="color:#34A853">a</span>
+        <span class="logo-letter" style="color:#EA4335">G</span>
       </div>
-      <p><strong>d</strong> = damping factor (0.85) &nbsp;|&nbsp; <strong>T<sub>i</sub></strong> = pages linking to A &nbsp;|&nbsp; <strong>C(T<sub>i</sub>)</strong> = outgoing links from T<sub>i</sub></p>
-      <div class="link-graph">
-        <h4>🔗 Simulated Link Graph (Mini Web)</h4>
-        <div class="graph-wrap" id="graphCanvas"></div>
+      <div class="logo-row-2">
+        <!-- Spinning pizza replaces first 'o' -->
+        <span class="logo-pizza-spin">
+          <svg width="52" height="52" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="26" cy="26" r="24" fill="#FBBC05" stroke="#D97706" stroke-width="2"/>
+            <circle cx="26" cy="26" r="20" fill="#FDE68A"/>
+            <circle cx="26" cy="26" r="16" fill="#FCD34D"/>
+            <circle cx="20" cy="20" r="3.5" fill="#DC2626"/>
+            <circle cx="32" cy="20" r="3.5" fill="#DC2626"/>
+            <circle cx="26" cy="30" r="3.5" fill="#DC2626"/>
+            <circle cx="17" cy="30" r="2.5" fill="#DC2626"/>
+            <circle cx="35" cy="30" r="2.5" fill="#DC2626"/>
+            <ellipse cx="22" cy="26" rx="2" ry="1.5" fill="#166534" transform="rotate(-30 22 26)"/>
+            <ellipse cx="30" cy="22" rx="2" ry="1.5" fill="#166534" transform="rotate(20 30 22)"/>
+            <path d="M26 2 Q30 10 26 14 Q22 10 26 2Z" fill="#D97706" opacity="0.7"/>
+          </svg>
+        </span>
+        <span class="logo-letter" style="color:#FBBC05">o</span>
+        <span class="logo-letter" style="color:#4285F4">g</span>
+        <span class="logo-letter" style="color:#34A853">l</span>
+        <span class="logo-letter" style="color:#EA4335">e</span>
       </div>
+      <p class="logo-tagline">Comparing <strong style="color:#FBBC05">1996 Keyword Stuffing</strong> vs. <strong style="color:#4285F4">1998 Google PageRank</strong></p>
     </div>
 
-    <div class="try-hint">
-      <p>🔍 Try searching: <span class="chip" onclick="setSearch('pizza')">pizza</span> <span class="chip" onclick="setSearch('pune food')">pune food</span> <span class="chip" onclick="setSearch('cheap eats')">cheap eats</span> <span class="chip" onclick="setSearch('recipes')">recipes</span></p>
+    <!-- Right mascot -->
+    <div class="mascot-card mascot-right">
+      <div class="mascot-avatar" style="background:linear-gradient(135deg,#DBEAFE,#BFDBFE)">
+        <span style="font-size:2.2rem" class="chef-toss">👨‍🍳</span>
+      </div>
+      <div class="mascot-speech">
+        <div class="mascot-name">Chef Mario <span class="mascot-title">Algorithm Chef</span></div>
+        <p>"Mamma mia! <strong>best-pizza-pune.com</strong> gets 4 real link-votes from Pune foodies—while Raccoon has ZERO links!"</p>
+      </div>
     </div>
   </section>
 
-  <!-- LINK GRAPH MODAL -->
-  <div class="modal-overlay" id="graphModal" style="display:none;" onclick="closeModal()">
-    <div class="modal-box" onclick="event.stopPropagation()">
-      <button class="modal-close" onclick="closeModal()">✕</button>
-      <h3>🔗 Full Link Graph</h3>
-      <canvas id="graphModalCanvas" width="700" height="460"></canvas>
+  <!-- ═══ SEARCH BAR ═══ -->
+  <section class="search-section">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input id="searchInput" type="text" class="search-input" placeholder="Search Pune food sites (try: pizza, pune, food, cheap, recipes, canteen)" autocomplete="off"/>
+      <button class="search-clear" onclick="clearSearch()" title="Clear">✕</button>
+      <button class="search-btn" onclick="runSearch()">Search</button>
+    </div>
+    <div class="chip-row">
+      <span class="chip-label">TRY QUERIES:</span>
+      <span class="chip chip-hot" onclick="setSearch('pizza')">🍕 pizza (Spam vs Rank!)</span>
+      <span class="chip" onclick="setSearch('pune')">🏙️ pune</span>
+      <span class="chip" onclick="setSearch('food')">🍽️ food</span>
+      <span class="chip" onclick="setSearch('cheap eats')">💰 cheap eats</span>
+      <span class="chip" onclick="setSearch('recipes')">📖 recipes</span>
+      <span class="chip" onclick="setSearch('canteen')">🏫 canteen</span>
+      <span class="chip chip-all" onclick="setSearch('*')">🌐 * (All 6 Sites)</span>
+    </div>
+  </section>
+
+  <!-- ═══ SPAM ALERT (shown after search) ═══ -->
+  <div class="spam-alert" id="spamAlert" style="display:none">
+    <div class="spam-alert-inner">
+      <span class="spam-siren">🚨</span>
+      <div class="spam-text">
+        <strong id="spamTitle">Spam Exposed!</strong>
+        <span id="spamDesc"></span>
+      </div>
+      <span class="spam-count-pill" id="spamCountPill"></span>
     </div>
   </div>
 
+  <!-- ═══ RESULTS ═══ -->
+  <section class="results-section" id="resultsSection" style="display:none">
+    <div class="results-columns">
+
+      <!-- OLD WAY -->
+      <div class="col-panel col-old">
+        <div class="col-header">
+          <div>
+            <span class="era-badge badge-old">🦕 1996 Search Era</span>
+            <h2 class="col-title">The Old Way <span class="col-subtitle">(Keyword Count)</span></h2>
+            <p class="col-desc">Ranks purely by how many times your search word appears in page text. Easy to spam!</p>
+          </div>
+          <div class="sort-rule sort-rule-old">
+            <span class="sort-label">SORTING RULE</span>
+            <code>COUNT(keyword) ↓</code>
+          </div>
+        </div>
+        <div id="oldResultsList"></div>
+      </div>
+
+      <!-- PAGERANK WAY -->
+      <div class="col-panel col-new">
+        <div class="col-header">
+          <div>
+            <span class="era-badge badge-new">👑 1998 Google Breakthrough</span>
+            <h2 class="col-title">The PageRank Way <span class="col-subtitle">(Link Votes)</span></h2>
+            <p class="col-desc">Links act as weighted votes. A link from a popular page boosts your rank!</p>
+          </div>
+          <div class="sort-rule sort-rule-new">
+            <span class="sort-label">SORTING RULE</span>
+            <code>PageRank PR(i) ↓</code>
+          </div>
+        </div>
+        <div id="newResultsList"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══ LANDING / EDUCATION ═══ -->
+  <section class="landing-section" id="landingSection">
+
+    <!-- ALGO EXPLAINER CARDS -->
+    <div class="algo-grid">
+      <div class="algo-card algo-old">
+        <div class="algo-icon">📜</div>
+        <h3>The Old Way (Pre-1998)</h3>
+        <ul>
+          <li>🔤 Count how many times a keyword appears in the page</li>
+          <li>🏷️ Meta keyword tags were king</li>
+          <li>🔗 No consideration for who links to you</li>
+          <li>🦝 Easily gamed: just repeat "pizza" 20 times!</li>
+          <li>❌ Spam sites ranked above real content</li>
+        </ul>
+      </div>
+      <div class="vs-pill">VS</div>
+      <div class="algo-card algo-new">
+        <div class="algo-icon">🚀</div>
+        <h3>PageRank Algorithm (Google 1998)</h3>
+        <ul>
+          <li>🔗 Each link = a vote of confidence</li>
+          <li>⚖️ Links from important pages count more</li>
+          <li>🔄 Iteratively computed with damping factor d=0.85</li>
+          <li>✅ Spam sites with 0 links rank at the bottom</li>
+          <li>✅ Authority flows through the web graph</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- GRAPH SECTION -->
+    <div class="graph-section" id="graph-section">
+      <div class="section-header">
+        <h2>🕸️ Link Graph &amp; Math Lab</h2>
+        <p>How authority flows between our 6 Pune food sites. Node size = PageRank score.</p>
+      </div>
+
+      <div class="formula-row">
+        <div class="formula-box">
+          <span class="formula-label">PageRank Formula:</span>
+          <code>PR(A) = (1 − d) / N + d × Σ [ PR(Tᵢ) / C(Tᵢ) ]</code>
+        </div>
+        <div class="damping-box">
+          <label class="damping-label">🎲 Damping Factor: <strong id="dampVal">0.85</strong></label>
+          <input type="range" id="dampSlider" min="0.10" max="0.99" step="0.01" value="0.85" class="damp-slider"/>
+          <div class="damp-markers"><span>0.10 (Random)</span><span>0.85 (Google)</span><span>0.99 (Pure Links)</span></div>
+        </div>
+      </div>
+
+      <div class="iter-controls">
+        <button class="iter-btn" onclick="iterReset()">⏮ Iter 0 (Equal)</button>
+        <button class="iter-btn iter-step" onclick="iterStep()">Step +1 ⏭</button>
+        <button class="iter-btn iter-converge" onclick="iterConverge()">Converge ⚡</button>
+        <span class="iter-count">Iteration: <strong id="iterNum">∞ (converged)</strong></span>
+      </div>
+
+      <div class="graph-canvas-wrap">
+        <canvas id="graphCanvas" width="900" height="400"></canvas>
+      </div>
+      <p class="graph-hint">Click a node to inspect its inbound links and PageRank contribution</p>
+
+      <div class="node-inspector" id="nodeInspector" style="display:none">
+        <h4 id="inspectorTitle">Node Details</h4>
+        <div id="inspectorBody"></div>
+      </div>
+    </div>
+
+    <!-- DATASET TABLE -->
+    <div class="dataset-section" id="dataset-section">
+      <div class="section-header">
+        <h2>📋 Mini-Google Index Dataset</h2>
+        <p>All 6 indexed pages with their link graph, keyword counts, and live PageRank scores.</p>
+      </div>
+      <div class="table-wrap">
+        <table class="dataset-table" id="datasetTable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Mascot</th>
+              <th>Site URL</th>
+              <th>Links To</th>
+              <th>Linked By</th>
+              <th>PageRank</th>
+            </tr>
+          </thead>
+          <tbody id="datasetBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
   <footer class="footer">
-    <p>MiniGoogle &mdash; Built to demonstrate Search Ranking Algorithms &nbsp;|&nbsp; <a href="#" onclick="showGraph()">View Link Graph 🔗</a></p>
+    <p>🍕 PizzaGoogle &mdash; Demonstrating Search Ranking Algorithms with Pune Food Sites</p>
+    <p style="margin-top:6px;font-size:0.78rem;opacity:0.7">Built with ❤️ | Old Way vs PageRank | 6 Sites Indexed</p>
   </footer>
 
   <script src="pagerank.js"></script>
